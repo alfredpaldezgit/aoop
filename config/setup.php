@@ -1,0 +1,64 @@
+<?php
+// --- Database Setup Script ---
+// This script connects to the MySQL server, creates the database, and the necessary table.
+
+// --- IMPORTANT ---
+// 1. Make sure your MySQL server is running (e.g., via XAMPP).
+// 2. Access this script from your browser to run it (e.g., http://localhost/aoop/config/setup.php).
+// 3. Update the credentials below if they differ from your XAMPP defaults.
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "inventory_db"; // The database to be created
+
+try {
+    // 1. Connect to MySQL Server (without specifying a database)
+    $conn = new PDO("mysql:host=$servername", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected to MySQL server successfully.<br>";
+
+    // 2. Create the database if it doesn't exist
+    $conn->exec("CREATE DATABASE IF NOT EXISTS `$dbname` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+    echo "Database '<strong>$dbname</strong>' created or already exists.<br>";
+
+    // 3. Select the new database for subsequent operations
+    $conn->exec("USE `$dbname`;");
+    echo "Switched to database '<strong>$dbname</strong>'.<br>";
+
+    // 4. Define the SQL for the 'products' table
+    $sql = "CREATE TABLE IF NOT EXISTS `products` (
+        `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(255) NOT NULL,
+        `quantity` INT(11) NOT NULL,
+        `price` DECIMAL(10, 2) NOT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );";
+
+    // 5. Execute the table creation query
+    $conn->exec($sql);
+    echo "Table '<strong>products</strong>' created or already exists.<br>";
+
+    // 6. Optionally, insert some sample data
+    $stmt = $conn->query("SELECT COUNT(*) FROM `products`");
+    if ($stmt->fetchColumn() == 0) {
+        $conn->exec("
+            INSERT INTO `products` (name, quantity, price) VALUES
+            ('Laptop', 10, 1200.50),
+            ('Mouse', 50, 25.00),
+            ('Keyboard', 30, 75.99);
+        ");
+        echo "Inserted sample data into '<strong>products</strong>' table.<br>";
+    }
+
+    echo "<hr><strong style='color:green;'>Database setup was successful! You can now remove or rename this file for security.</strong>";
+
+} catch(PDOException $e) {
+    // Display error message if something goes wrong
+    echo "<strong style='color:red;'>Error: " . $e->getMessage() . "</strong><br>";
+    echo "Please check your MySQL credentials in `config/setup.php` and ensure your MySQL server is running.";
+}
+
+// Close the connection
+$conn = null;
+?>
