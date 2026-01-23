@@ -49,9 +49,11 @@ class InventoryController {
             return;
         }
 
-        if ($this->productModel->create($data)) {
+        $newId = $this->productModel->create($data);
+        if ($newId) {
+            $newProduct = $this->productModel->getById($newId);
             http_response_code(201); // Created
-            echo json_encode(['message' => 'Product created successfully.']);
+            echo json_encode($newProduct);
         } else {
             http_response_code(500); // Internal Server Error
             echo json_encode(['message' => 'Failed to create product.']);
@@ -72,7 +74,8 @@ class InventoryController {
         }
 
         if ($this->productModel->update($data['id'], $data)) {
-            echo json_encode(['message' => 'Product updated successfully.']);
+            $updatedProduct = $this->productModel->getById($data['id']);
+            echo json_encode($updatedProduct);
         } else {
             http_response_code(500); // Internal Server Error
             echo json_encode(['message' => 'Failed to update product.']);

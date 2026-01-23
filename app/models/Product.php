@@ -54,11 +54,14 @@ class Product {
     public function create($data) {
         $query = "INSERT INTO {$this->table} (name, quantity, price) VALUES (:name, :quantity, :price)";
         $stmt = $this->db->prepare($query);
-        return $stmt->execute([
+        if ($stmt->execute([
             'name' => htmlspecialchars(strip_tags($data['name'])),
             'quantity' => filter_var($data['quantity'], FILTER_SANITIZE_NUMBER_INT),
             'price' => filter_var($data['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
-        ]);
+        ])) {
+            return $this->db->lastInsertId();
+        }
+        return false;
     }
 
     /**
