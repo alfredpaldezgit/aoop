@@ -13,6 +13,10 @@
         .card-header { background-color: #0d6efd; color: white; }
         .table-hover tbody tr:hover { background-color: #e9ecef; }
         .align-middle { vertical-align: middle; }
+        .sortable { cursor: pointer; user-select: none; }
+        .sortable .fa-sort, .sortable .fa-sort-up, .sortable .fa-sort-down { margin-left: 5px; color: #ced4da; }
+        .sortable:hover { background-color: #495057; }
+        .badge { font-size: 0.9em; }
     </style>
 </head>
 <body>
@@ -32,27 +36,44 @@
                 </button>
             </div>
             <div class="card-body">
+                <div class="row mb-3 gx-2">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search by Product Name...">
+                    </div>
+                    <div class="col-md-3">
+                        <select id="categoryFilter" class="form-select">
+                            <option value="">All Categories</option>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['name']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
+                                <th class="sortable" data-sort="name" data-order="desc">Product Name <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="category" data-order="desc">Category <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="quantity" data-order="desc">Quantity <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="price" data-order="desc">Price <i class="fas fa-sort"></i></th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="product-list">
                             <?php if (empty($products)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted">No products found. Click 'Add New Product' to get started!</td>
+                                    <td colspan="6" class="text-center text-muted">No products found. Click 'Add New Product' to get started!</td>
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($products as $product): ?>
-                                    <tr id="product-<?php echo $product['id']; ?>">
+                                    <tr id="product-<?php echo $product['id']; ?>" data-category-id="<?php echo $product['category_id']; ?>">
                                         <td><strong><?php echo $product['id']; ?></strong></td>
                                         <td class="name"><?php echo htmlspecialchars($product['name']); ?></td>
+                                        <td class="category">
+                                            <span class="badge bg-secondary"><?php echo htmlspecialchars($product['category_name'] ?? 'N/A'); ?></span>
+                                        </td>
                                         <td class="quantity"><?php echo htmlspecialchars($product['quantity']); ?></td>
                                         <td class="price">$<?php echo number_format($product['price'], 2); ?></td>
                                         <td class="text-center">
@@ -87,17 +108,31 @@
                         <div class="mb-3">
                             <label for="productName" class="form-label">Product Name</label>
                             <input type="text" class="form-control" id="productName" name="name" required>
+                            <div class="invalid-feedback">Product name cannot be empty.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productCategory" class="form-label">Category</label>
+                            <select class="form-select" id="productCategory" name="category_id">
+                                <option value="">Select a category</option>
+                                <?php if (!empty($categories)): ?>
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['name']); ?></option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="productQuantity" class="form-label">Quantity</label>
                                 <input type="number" class="form-control" id="productQuantity" name="quantity" min="0" required>
+                                <div class="invalid-feedback">Quantity must be a whole number (0 or greater).</div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="productPrice" class="form-label">Price</label>
-                                <div class="input-group">
+                                <div class="input-group has-validation">
                                     <span class="input-group-text">$</span>
                                     <input type="number" class="form-control" id="productPrice" name="price" min="0" step="0.01" required>
+                                    <div class="invalid-feedback">Price must be a valid number (0.00 or greater).</div>
                                 </div>
                             </div>
                         </div>

@@ -26,32 +26,66 @@ try {
     $conn->exec("USE `$dbname`;");
     echo "Switched to database '<strong>$dbname</strong>'.<br>";
 
-    // 4. Define the SQL for the 'products' table
-    $sql = "CREATE TABLE IF NOT EXISTS `products` (
+    // 4. Create the 'categories' table
+    $conn->exec("CREATE TABLE IF NOT EXISTS `categories` (
+        `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(255) NOT NULL UNIQUE
+    ) ENGINE=InnoDB;");
+    echo "Table '<strong>categories</strong>' created or already exists.<br>";
+
+    // 5. Create the 'products' table
+    $conn->exec("CREATE TABLE IF NOT EXISTS `products` (
         `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         `name` VARCHAR(255) NOT NULL,
         `quantity` INT(11) NOT NULL,
         `price` DECIMAL(10, 2) NOT NULL,
         `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );";
-
-    // 5. Execute the table creation query
-    $conn->exec($sql);
+    ) ENGINE=InnoDB;");
     echo "Table '<strong>products</strong>' created or already exists.<br>";
 
-    // 6. Optionally, insert some sample data
-    $stmt = $conn->query("SELECT COUNT(*) FROM `products`");
+    // 6. Add 'category_id' to products table if it doesn't exist
+    $stmt = $conn->query("SHOW COLUMNS FROM `products` LIKE 'category_id'");
+    if ($stmt->rowCount() == 0) {
+        $conn->exec("ALTER TABLE `products` 
+                     ADD COLUMN `category_id` INT(11) UNSIGNED NULL AFTER `price`,
+                     ADD FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE SET NULL;");
+        echo "Column '<strong>category_id</strong>' and foreign key added to 'products' table.<br>";
+    }
+
+    // 7. Add 'image' column to products table if it doesn't exist
+    $stmt = $conn->query("SHOW COLUMNS FROM `products` LIKE 'image'");
+    if ($stmt->rowCount() == 0) {
+        $conn->exec("ALTER TABLE `products` 
+                     ADD COLUMN `image` VARCHAR(255) NULL DEFAULT NULL AFTER `category_id`;");
+        echo "Column '<strong>image</strong>' added to 'products' table.<br>";
+    }
+
+    // 8. Insert sample categories if the table is empty
+    $stmt = $conn->query("SELECT COUNT(*) FROM `categories`");
     if ($stmt->fetchColumn() == 0) {
         $conn->exec("
-            INSERT INTO `products` (name, quantity, price) VALUES
-            ('Laptop', 10, 1200.50),
-            ('Mouse', 50, 25.00),
-            ('Keyboard', 30, 75.99);
+            INSERT INTO `categories` (name) VALUES
+            ('Electronics'),
+            ('Peripherals');
+        ");
+        echo "Inserted sample data into '<strong>categories</strong>' table.<br>";
+    }
+
+    // 9. Insert sample products if the table is empty
+    $stmt = $conn->query("SELECT COUNT(*) FROM `products`");
+    if ($stmt->fetchColumn() == 0) {
+        // Clear existing data to prevent conflicts
+        $conn->exec("TRUNCATE TABLE `products`"); 
+        $conn->exec("
+            INSERT INTO `products` (name, quantity, price, category_id, image) VALUES
+            ('Laptop', 10, 1200.50, 1, NULL),
+            ('Mouse', 50, 25.00, 2, NULL),
+            ('Keyboard', 30, 75.99, 2, NULL);
         ");
         echo "Inserted sample data into '<strong>products</strong>' table.<br>";
     }
 
-    echo "<hr><strong style='color:green;'>Database setup was successful! You can now remove or rename this file for security.</strong>";
+    echo "<hr><strong style='color:green;'>Database setup was successful! You can now browse to the main application.</strong>";
 
 } catch(PDOException $e) {
     // Display error message if something goes wrong
