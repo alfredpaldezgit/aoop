@@ -17,13 +17,69 @@
         .sortable .fa-sort, .sortable .fa-sort-up, .sortable .fa-sort-down { margin-left: 5px; color: #ced4da; }
         .sortable:hover { background-color: #495057; }
         .badge { font-size: 0.9em; }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        body.dark-mode .card {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+        body.dark-mode .table {
+            color: #e0e0e0;
+            border-color: #444;
+        }
+        body.dark-mode .table-hover tbody tr:hover {
+            background-color: #3a3a3a;
+        }
+        body.dark-mode .table-dark {
+            background-color: #1e1e1e;
+        }
+        body.dark-mode .form-control,
+        body.dark-mode .form-select {
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+        body.dark-mode .form-control:focus,
+        body.dark-mode .form-select:focus {
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            border-color: #0d6efd;
+        }
+        body.dark-mode .navbar-light {
+            background-color: #2d2d2d !important;
+            border-bottom: 1px solid #444;
+        }
+        body.dark-mode .container-fluid {
+            background-color: #2d2d2d;
+        }
+        body.dark-mode .modal-content {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fas fa-box-open me-2"></i><strong>InventorySys</strong></a>
+            <a class="navbar-brand" href="index.php"><i class="fas fa-box-open me-2"></i><strong>InventorySys</strong></a>
+            <div class="navbar-nav ms-auto">
+                <label class="nav-link form-check form-switch me-2">
+                    <input class="form-check-input" type="checkbox" id="darkModeToggle" style="cursor: pointer; transform: scale(1.5);">
+                    <i class="fas fa-moon ms-2"></i>
+                </label>
+                <a href="index.php?action=reports" class="nav-link btn btn-light btn-sm me-2">
+                    <i class="fas fa-file-alt me-1"></i>Reports
+                </a>
+                <a href="index.php?action=dashboard" class="nav-link btn btn-light btn-sm me-2">
+                    <i class="fas fa-chart-pie me-1"></i>Dashboard
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -31,9 +87,14 @@
         <div class="card border-0 shadow-lg">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="mb-0"><i class="fas fa-list-ul me-2"></i>Product Inventory</h4>
-                <button class="btn btn-light fw-bold" data-bs-toggle="modal" data-bs-target="#productModal" id="addProductBtn">
-                    <i class="fas fa-plus-circle me-2"></i>Add New Product
-                </button>
+                <div>
+                    <a href="index.php?action=export-csv" class="btn btn-success fw-bold me-2">
+                        <i class="fas fa-download me-2"></i>Export CSV
+                    </a>
+                    <button class="btn btn-light fw-bold" data-bs-toggle="modal" data-bs-target="#productModal" id="addProductBtn">
+                        <i class="fas fa-plus-circle me-2"></i>Add New Product
+                    </button>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row mb-3 gx-2">
@@ -155,6 +216,27 @@
     <script src="public/js/app.js"></script>
 
     <script>
+      // Dark Mode Toggle
+      document.addEventListener('DOMContentLoaded', function() {
+          const darkModeToggle = document.getElementById('darkModeToggle');
+          const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+          
+          if (isDarkMode) {
+              document.body.classList.add('dark-mode');
+              darkModeToggle.checked = true;
+          }
+
+          darkModeToggle.addEventListener('change', function() {
+              if (this.checked) {
+                  document.body.classList.add('dark-mode');
+                  localStorage.setItem('darkMode', 'enabled');
+              } else {
+                  document.body.classList.remove('dark-mode');
+                  localStorage.setItem('darkMode', 'disabled');
+              }
+          });
+      });
+
       // Enable Bootstrap tooltips
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

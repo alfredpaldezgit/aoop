@@ -4,6 +4,48 @@ $(document).ready(function() {
     const productForm = $('#productForm');
     const productList = $('#product-list');
     const LOW_STOCK_THRESHOLD = 10;
+    let searchTimeout;
+
+    /**
+     * Initialize dark mode toggle if exists
+     */
+    function initDarkMode() {
+        const darkModeToggle = $('#darkModeToggle');
+        if (darkModeToggle.length) {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                enableDarkMode();
+                darkModeToggle.checked = true;
+            }
+            darkModeToggle.on('change', function() {
+                if (this.checked) {
+                    enableDarkMode();
+                } else {
+                    disableDarkMode();
+                }
+            });
+        }
+    }
+
+    function enableDarkMode() {
+        $('body').addClass('dark-mode');
+        localStorage.setItem('darkMode', 'true');
+    }
+
+    function disableDarkMode() {
+        $('body').removeClass('dark-mode');
+        localStorage.setItem('darkMode', 'false');
+    }
+
+    /**
+     * Debounce function for search
+     */
+    function debounce(func, delay) {
+        return function(...args) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
 
     /**
      * Applies a warning style to a row if its quantity is below the threshold.
@@ -221,7 +263,9 @@ $(document).ready(function() {
         }
     }
 
-    $('#searchInput').on('keyup', applyFilters);
+    // Apply debounced search with 300ms delay
+    const debouncedSearch = debounce(applyFilters, 300);
+    $('#searchInput').on('keyup', debouncedSearch);
     $('#categoryFilter').on('change', applyFilters);
 
     // Initial check for low stock on page load
@@ -230,4 +274,7 @@ $(document).ready(function() {
             checkLowStock($(this));
         }
     });
+
+    // Initialize dark mode
+    initDarkMode();
 });

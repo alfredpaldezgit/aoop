@@ -60,7 +60,18 @@ try {
         echo "Column '<strong>image</strong>' added to 'products' table.<br>";
     }
 
-    // 8. Insert sample categories if the table is empty
+    // 8. Create 'users' table if it doesn't exist
+    $conn->exec("CREATE TABLE IF NOT EXISTS `users` (
+        `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `username` VARCHAR(100) NOT NULL UNIQUE,
+        `email` VARCHAR(255) NOT NULL UNIQUE,
+        `password` VARCHAR(255) NOT NULL,
+        `role` ENUM('admin', 'staff', 'viewer') DEFAULT 'staff',
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB;");
+    echo "Table '<strong>users</strong>' created or already exists.<br>";
+
+    // 9. Insert sample categories if the table is empty
     $stmt = $conn->query("SELECT COUNT(*) FROM `categories`");
     if ($stmt->fetchColumn() == 0) {
         $conn->exec("
@@ -71,7 +82,7 @@ try {
         echo "Inserted sample data into '<strong>categories</strong>' table.<br>";
     }
 
-    // 9. Insert sample products if the table is empty
+    // 10. Insert sample products if the table is empty
     $stmt = $conn->query("SELECT COUNT(*) FROM `products`");
     if ($stmt->fetchColumn() == 0) {
         // Clear existing data to prevent conflicts
