@@ -14,6 +14,47 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Load database configuration
+require_once __DIR__ . '/config/database.php';
+
+/**
+ * Check if the database is set up and accessible
+ * @return bool True if database is accessible, false otherwise
+ */
+function isDatabaseSetup() {
+    try {
+        $pdo = new PDO(
+            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
+            DB_USER,
+            DB_PASS,
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
+        
+        // Check if required tables exist
+        $tables = ['categories', 'products', 'users'];
+        foreach ($tables as $table) {
+            $stmt = $pdo->query("SHOW TABLES LIKE '$table'");
+            if ($stmt->rowCount() === 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    } catch (PDOException $e) {
+        return false;
+    }
+}
+
+// Check if setup is needed (skip setup.php route)
+$currentScript = basename($_SERVER['SCRIPT_FILENAME']);
+if ($currentScript === 'index.php' && !isDatabaseSetup()) {
+    // Don't redirect if user is already on setup or accessing setup files
+    if (!isset($_GET['action']) || $_GET['action'] !== 'setup') {
+        header('Location: setup.php');
+        exit;
+    }
+}
+
 // Autoload the controllers
 require_once __DIR__ . '/app/controllers/InventoryController.php';
 require_once __DIR__ . '/app/controllers/AuthController.php';
