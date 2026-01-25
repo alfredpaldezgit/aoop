@@ -1,7 +1,9 @@
 <?php
 // Defines the Category model, responsible for database operations related to categories.
 
-require_once __DIR__ . '/../../config/database.php';
+if (!defined('DB_HOST')) {
+    require_once __DIR__ . '/../../config/database.php';
+}
 
 class Category {
     private $db;

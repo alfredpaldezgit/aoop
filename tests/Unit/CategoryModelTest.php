@@ -14,6 +14,7 @@ require_once dirname(__DIR__) . '/TestCase.php';
 
 class CategoryModelTest extends TestCase {
     private static $testSetup = false;
+    private $pdo;
 
     public static function setUpBeforeClass(): void {
         BaseTestCase::createTestDatabase();
@@ -25,21 +26,33 @@ class CategoryModelTest extends TestCase {
     }
 
     /**
-     * Override DB constants for testing
+     * Set up test environment before each test
      */
     protected function setUp(): void {
         parent::setUp();
-        if (!defined('DB_HOST')) {
-            define('DB_HOST', 'localhost');
-        }
-        if (!defined('DB_USER')) {
-            define('DB_USER', 'root');
-        }
-        if (!defined('DB_PASS')) {
-            define('DB_PASS', '');
-        }
-        if (!defined('DB_NAME')) {
-            define('DB_NAME', 'inventory_db_test');
+
+        // Create PDO connection for cleanup
+        $this->pdo = new \PDO(
+            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
+            DB_USER,
+            DB_PASS
+        );
+
+        // Clear tables before each test (disable foreign key checks)
+        $this->pdo->exec("SET FOREIGN_KEY_CHECKS=0");
+        $this->pdo->exec("TRUNCATE TABLE categories");
+        $this->pdo->exec("TRUNCATE TABLE products");
+        $this->pdo->exec("SET FOREIGN_KEY_CHECKS=1");
+    }
+
+    protected function tearDown(): void {
+        parent::tearDown();
+        // Cleanup after each test
+        if ($this->pdo) {
+            $this->pdo->exec("SET FOREIGN_KEY_CHECKS=0");
+            $this->pdo->exec("TRUNCATE TABLE categories");
+            $this->pdo->exec("TRUNCATE TABLE products");
+            $this->pdo->exec("SET FOREIGN_KEY_CHECKS=1");
         }
     }
 
@@ -67,13 +80,7 @@ class CategoryModelTest extends TestCase {
         $category = new \Category();
         
         // Insert test categories using direct query
-        $pdo = new \PDO(
-            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
-            DB_USER,
-            DB_PASS
-        );
-        
-        $pdo->exec("INSERT INTO categories (name, description) VALUES 
+        $this->pdo->exec("INSERT INTO categories (name, description) VALUES 
                    ('Electronics', 'Electronic devices'),
                    ('Software', 'Software products')");
         
@@ -89,17 +96,8 @@ class CategoryModelTest extends TestCase {
      * Test categories are sorted by name
      */
     public function testCategoriesSortedByName() {
-        $pdo = new \PDO(
-            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
-            DB_USER,
-            DB_PASS
-        );
-        
-        // Clear existing categories
-        $pdo->exec("TRUNCATE TABLE categories");
-        
         // Insert categories in random order
-        $pdo->exec("INSERT INTO categories (name) VALUES 
+        $this->pdo->exec("INSERT INTO categories (name) VALUES 
                    ('Zebra Products'),
                    ('Apple Products'),
                    ('Middle Products')");

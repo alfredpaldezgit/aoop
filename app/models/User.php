@@ -1,7 +1,9 @@
 <?php
 // User model for handling user authentication
 
-require_once __DIR__ . '/../../config/database.php';
+if (!defined('DB_HOST')) {
+    require_once __DIR__ . '/../../config/database.php';
+}
 
 class User {
     private $db;

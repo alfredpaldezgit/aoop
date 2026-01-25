@@ -1,8 +1,10 @@
 <?php
 // Defines the Product model, responsible for all database operations related to products.
 
-// Fetches the database configuration constants.
-require_once __DIR__ . '/../../config/database.php';
+// Fetches the database configuration constants (only if not already defined)
+if (!defined('DB_HOST')) {
+    require_once __DIR__ . '/../../config/database.php';
+}
 
 class Product {
     private $db;
