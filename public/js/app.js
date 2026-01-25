@@ -64,6 +64,10 @@ $(document).ready(function() {
             $('#productName').addClass('is-invalid');
             isValid = false;
         }
+        if ($('#productCategory').val() === '') {
+            $('#productCategory').addClass('is-invalid');
+            isValid = false;
+        }
         const quantity = $('#productQuantity').val();
         if (quantity === '' || !/^\d+$/.test(quantity) || parseInt(quantity) < 0) {
             $('#productQuantity').addClass('is-invalid');
@@ -117,8 +121,7 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(formData),
+            data: formData,
             success: function(product) {
                 productModal.hide();
                 const price = parseFloat(product.price).toFixed(2);

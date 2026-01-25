@@ -35,7 +35,7 @@ class InventoryController {
         header('Content-Type: application/json');
         $data = $_POST;
 
-        if (empty($data['name']) || !isset($data['quantity']) || !isset($data['price'])) {
+        if (empty($data['name']) || !isset($data['quantity']) || !isset($data['price']) || empty($data['category_id'])) {
             http_response_code(400);
             echo json_encode(['message' => 'Invalid input. Please fill all fields.']);
             return;
@@ -67,7 +67,7 @@ class InventoryController {
         $data = $_POST;
         $id = $data['id'] ?? null;
 
-        if (empty($id) || empty($data['name']) || !isset($data['quantity']) || !isset($data['price'])) {
+        if (empty($id) || empty($data['name']) || !isset($data['quantity']) || !isset($data['price']) || empty($data['category_id'])) {
             http_response_code(400);
             echo json_encode(['message' => 'Invalid input. Missing required fields.']);
             return;

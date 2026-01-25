@@ -57,7 +57,7 @@ class Product {
                   VALUES (:name, :quantity, :price, :category_id, :image)";
         $stmt = $this->db->prepare($query);
 
-        $categoryId = !empty($data['category_id']) ? filter_var($data['category_id'], FILTER_SANITIZE_NUMBER_INT) : null;
+        $categoryId = filter_var($data['category_id'], FILTER_SANITIZE_NUMBER_INT);
         $image = !empty($data['image']) ? htmlspecialchars(strip_tags($data['image'])) : null;
 
         if ($stmt->execute([
@@ -87,7 +87,7 @@ class Product {
             'name' => htmlspecialchars(strip_tags($data['name'])),
             'quantity' => filter_var($data['quantity'], FILTER_SANITIZE_NUMBER_INT),
             'price' => filter_var($data['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
-            'category_id' => !empty($data['category_id']) ? filter_var($data['category_id'], FILTER_SANITIZE_NUMBER_INT) : null
+            'category_id' => filter_var($data['category_id'], FILTER_SANITIZE_NUMBER_INT)
         ];
 
         // Conditionally add image to the update query ONLY if it's being changed
