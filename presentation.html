@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System - Project Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%) !important;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-right: 2rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #fff !important;
+            text-decoration: underline;
+        }
+
+        /* Header Section */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        .container-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0099ff 100%);
+            color: white;
+            padding: 1.5rem;
+            border: none;
+        }
+
+        .card-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .subsection-header {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .feature-list.checked-items li:before {
+            content: "✓";
+            color: var(--success-color);
+        }
+
+        /* Table Styles */
+        .table-responsive {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        table {
+            margin-bottom: 0;
+        }
+
+        table thead {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0099ff 100%);
+            color: white;
+        }
+
+        table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        table tbody tr:hover {
+            background-color: #f0f8ff;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        code {
+            color: #d63384;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Badge Styles */
+        .badge-pill {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .badge-tech {
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Grid Layout */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-box i {
+            color: var(--warning-color);
+            margin-right: 0.5rem;
+        }
+
+        /* Tech Stack Badge */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-stack .badge {
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+        }
+
+        /* Sidebar Navigation */
+        .toc {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 80px;
+        }
+
+        .toc h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-main">
+            <a class="navbar-brand" href="#top">
+                <i class="fas fa-boxes"></i> Inventory Management System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#setup">Setup</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#usage">Usage</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testing">Testing</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section" id="top">
+        <div class="container-main">
+            <h1><i class="fas fa-boxes"></i> Inventory Management System</h1>
+            <p>A comprehensive, web-based inventory management system with advanced features and security</p>
+            <p style="font-size: 1rem; opacity: 0.85; margin-top: 1rem;">Built with PHP, MySQL, and Bootstrap 5 | MVC Architecture</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container-main">
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2 class="section-header"><i class="fas fa-info-circle"></i> Project Overview</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5>What is This Project?</h5>
+                </div>
+                <div class="card-body">
+                    <p>This is a comprehensive, web-based <strong>Inventory Management System</strong> built with modern PHP, MySQL, and Bootstrap 5, following the Model-View-Controller (MVC) architectural pattern. The system provides complete CRUD (Create, Read, Update, Delete) functionality with advanced features including user authentication, detailed reporting, analytics, and real-time dashboard statistics.</p>
+                    
+                    <h5 class="subsection-header">Key Capabilities</h5>
+                    <ul class="feature-list">
+                        <li>Complete product inventory management</li>
+                        <li>User authentication and role-based access control</li>
+                        <li>Real-time dashboard with statistics and alerts</li>
+                        <li>Multiple inventory report types with export functionality</li>
+                        <li>Advanced analytics including ABC analysis</li>
+                        <li>Secure data handling and validation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Stack -->
+        <section>
+            <h3 class="subsection-header"><i class="fas fa-code"></i> Technology Stack</h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-server"></i> Backend</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="tech-stack">
+                                <span class="badge bg-danger badge-tech">PHP 8+</span>
+                                <span class="badge bg-warning badge-tech">MySQL</span>
+                                <span class="badge bg-primary badge-tech">PDO</span>
+                                <span class="badge bg-success badge-tech">BCrypt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-palette"></i> Frontend</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="tech-stack">
+                                <span class="badge bg-info badge-tech">HTML5</span>
+                                <span class="badge bg-info badge-tech">CSS3</span>
+                                <span class="badge bg-warning badge-tech">JavaScript</span>
+                                <span class="badge bg-primary badge-tech">Bootstrap 5</span>
+                                <span class="badge bg-secondary badge-tech">jQuery</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-cog"></i> Infrastructure</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="tech-stack">
+                                <span class="badge bg-warning badge-tech">Apache</span>
+                                <span class="badge bg-secondary badge-tech">XAMPP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-shield-alt"></i> Architecture</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="tech-stack">
+                                <span class="badge bg-danger badge-tech">MVC Pattern</span>
+                                <span class="badge bg-success badge-tech">OOP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <h2 class="section-header"><i class="fas fa-star"></i> Features & Capabilities</h2>
+
+            <h3 class="subsection-header">Core Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="fas fa-eye"></i>
+                    <h5>View Products</h5>
+                    <p>Display all products with name, quantity, price, and category details</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-plus-circle"></i>
+                    <h5>Add Products</h5>
+                    <p>Modal form for seamless product addition with validation</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-edit"></i>
+                    <h5>Edit Products</h5>
+                    <p>Update product information without page refresh using AJAX</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-trash"></i>
+                    <h5>Delete Products</h5>
+                    <p>Remove products with confirmation protection</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-search"></i>
+                    <h5>Search & Filter</h5>
+                    <p>Real-time search by product name and category filtering</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h5>Responsive UI</h5>
+                    <p>Clean, modern Bootstrap 5 interface for all devices</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-header">Advanced Features</h3>
+            <ul class="feature-list checked-items">
+                <li><strong>User Authentication:</strong> Registration, login/logout with password hashing (BCrypt)</li>
+                <li><strong>Dashboard:</strong> Real-time statistics, low-stock alerts, top products, category breakdown</li>
+                <li><strong>Reports:</strong> Inventory, Low-Stock, Category Analysis, ABC Analysis, Reorder Reports</li>
+                <li><strong>CSV Export:</strong> Download inventory data in CSV format</li>
+                <li><strong>Dark Mode:</strong> Theme toggle with persistent storage</li>
+                <li><strong>Security:</strong> Input validation, SQL injection prevention, XSS protection, rate limiting</li>
+                <li><strong>Analytics:</strong> ABC analysis, category value breakdown, top products by value</li>
+                <li><strong>Stock Alerts:</strong> Low inventory warnings and out-of-stock tracking</li>
+            </ul>
+        </section>
+
+        <!-- Project Structure -->
+        <section id="architecture">
+            <h2 class="section-header"><i class="fas fa-folder-tree"></i> Project Architecture</h2>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Directory Structure</h5>
+                </div>
+                <div class="card-body">
+                    <pre><code>aoop/
+├── app/
+│   ├── controllers/
+│   │   ├── InventoryController.php    # Main inventory operations
+│   │   └── AuthController.php          # Authentication logic
+│   ├── models/
+│   │   ├── Product.php                 # Product database operations
+│   │   ├── Category.php                # Category management
+│   │   ├── User.php                    # User authentication model
+│   │   └── Stats.php                   # Dashboard statistics
+│   ├── helpers/
+│   │   ├── SecurityHelper.php          # Validation & security utilities
+│   │   └── ReportGenerator.php         # Report generation engine
+│   └── views/
+│       ├── inventory.php               # Main inventory page
+│       ├── dashboard.php               # Dashboard with statistics
+│       ├── login.php                   # Login page
+│       ├── register.php                # Registration page
+│       └── reports.php                 # Reports interface
+├── config/
+│   ├── database.php                    # Database credentials
+│   └── setup.php                       # Database initialization
+├── public/
+│   ├── js/
+│   │   └── app.js                      # AJAX & DOM manipulation
+│   └── uploads/
+│       └── images/                     # Product images
+├── tests/
+│   ├── Unit/
+│   │   ├── SecurityHelperTest.php
+│   │   ├── ProductModelTest.php
+│   │   ├── UserModelTest.php
+│   │   └── CategoryModelTest.php
+├── index.php                           # Front Controller & Router
+└── README.md                           # Documentation</code></pre>
+                </div>
+            </div>
+
+            <h3 class="subsection-header"><i class="fas fa-database"></i> Database Schema</h3>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Table Name</th>
+                            <th>Purpose</th>
+                            <th>Key Columns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>categories</strong></td>
+                            <td>Product categories</td>
+                            <td>id, name, description, created_at</td>
+                        </tr>
+                        <tr>
+                            <td><strong>products</strong></td>
+                            <td>Inventory products</td>
+                            <td>id, name, quantity, price, category_id, image, created_at, updated_at</td>
+                        </tr>
+                        <tr>
+                            <td><strong>users</strong></td>
+                            <td>System users</td>
+                            <td>id, username, email, password, role, status, created_at</td>
+                        </tr>
+                        <tr>
+                            <td><strong>audit_logs</strong></td>
+                            <td>System audit trail</td>
+                            <td>id, user_id, action, table_name, old_values, new_values, created_at</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Setup Guide -->
+        <section id="setup">
+            <h2 class="section-header"><i class="fas fa-hammer"></i> Setup & Installation</h2>
+
+            <div class="alert-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Prerequisites:</strong> You must have XAMPP installed with Apache and MySQL running
+            </div>
+
+            <h3 class="subsection-header">Step 1: Project Placement</h3>
+            <p>Ensure the project folder (<code>aoop</code>) is located at: <code>c:\xampp\htdocs\aoop\</code></p>
+
+            <h3 class="subsection-header">Step 2: Start Services</h3>
+            <ul class="feature-list">
+                <li>Open XAMPP Control Panel</li>
+                <li>Click "Start" for <strong>Apache</strong> (should turn green)</li>
+                <li>Click "Start" for <strong>MySQL</strong> (should turn green)</li>
+            </ul>
+
+            <h3 class="subsection-header">Setup Methods</h3>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-globe"></i> Method 1: Web Browser Setup (Recommended)</h5>
+                </div>
+                <div class="card-body">
+                    <ol>
+                        <li>Open your browser and navigate to: <code>http://localhost/aoop/setup.php</code></li>
+                        <li>Click "Start Setup" button</li>
+                        <li>The wizard will create database, tables, and insert sample data</li>
+                        <li>After successful setup, click "Go to Application"</li>
+                    </ol>
+                    <h6 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Default Credentials:</h6>
+                    <ul>
+                        <li>Username: <code>admin</code></li>
+                        <li>Password: <code>admin123</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-terminal"></i> Method 2: Command Line Setup (Windows)</h5>
+                </div>
+                <div class="card-body">
+                    <ol>
+                        <li>Open Command Prompt or PowerShell</li>
+                        <li>Navigate to the project directory:
+                            <pre><code>cd C:\xampp\htdocs\aoop</code></pre>
+                        </li>
+                        <li>Run the setup batch file:
+                            <pre><code>setup.bat</code></pre>
+                        </li>
+                        <li>Wait for the setup to complete</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-terminal"></i> Method 3: Command Line Setup (Linux/Mac)</h5>
+                </div>
+                <div class="card-body">
+                    <ol>
+                        <li>Open Terminal</li>
+                        <li>Navigate to the project directory:
+                            <pre><code>cd /path/to/aoop</code></pre>
+                        </li>
+                        <li>Make the script executable:
+                            <pre><code>chmod +x setup.sh</code></pre>
+                        </li>
+                        <li>Run the setup script:
+                            <pre><code>./setup.sh</code></pre>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-code"></i> Method 4: Direct PHP CLI</h5>
+                </div>
+                <div class="card-body">
+                    <p>Run directly from command line:</p>
+                    <pre><code>php setup-cli.php</code></pre>
+                </div>
+            </div>
+
+            <h3 class="subsection-header">Post-Setup Steps</h3>
+            <ul class="feature-list">
+                <li>Access the application at: <code>http://localhost/aoop/</code></li>
+                <li>Login with admin credentials (admin / admin123)</li>
+                <li><strong>IMPORTANT:</strong> Change the default admin password immediately</li>
+                <li>Create additional user accounts as needed</li>
+                <li>Configure application settings</li>
+            </ul>
+
+            <h3 class="subsection-header">Database Configuration</h3>
+            <p>Edit <code>config/database.php</code> to change connection details:</p>
+            <pre><code>define('DB_HOST', 'localhost');      // MySQL host
+define('DB_USER', 'root');         // MySQL username
+define('DB_PASS', '');             // MySQL password
+define('DB_NAME', 'inventory_db'); // Database name</code></pre>
+        </section>
+
+        <!-- Usage Guide -->
+        <section id="usage">
+            <h2 class="section-header"><i class="fas fa-book"></i> Usage Guide</h2>
+
+            <h3 class="subsection-header">Main Pages & Routes</h3>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Page</th>
+                            <th>URL / Route</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Inventory</strong></td>
+                            <td><code>http://localhost/aoop/</code></td>
+                            <td>View, add, edit, delete products</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dashboard</strong></td>
+                            <td><code>?action=dashboard</code></td>
+                            <td>Statistics, alerts, top products</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reports</strong></td>
+                            <td><code>?action=reports</code></td>
+                            <td>Generate various inventory reports</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Login</strong></td>
+                            <td><code>?action=login-page</code></td>
+                            <td>User authentication</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Register</strong></td>
+                            <td><code>?action=register-page</code></td>
+                            <td>Create new account</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Logout</strong></td>
+                            <td><code>?action=logout</code></td>
+                            <td>Sign out from account</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-header">Feature Descriptions</h3>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-chart-line"></i> Dashboard</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="feature-list">
+                        <li>View total products and inventory value</li>
+                        <li>Monitor low-stock items and out-of-stock count</li>
+                        <li>Check average prices and top products by value</li>
+                        <li>View category breakdown and distribution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-boxes"></i> Inventory Management</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="feature-list">
+                        <li>Search products by name (real-time filtering)</li>
+                        <li>Filter by category</li>
+                        <li>Add new products with image upload</li>
+                        <li>Edit existing products</li>
+                        <li>Delete products with confirmation</li>
+                        <li>Toggle dark mode for comfortable viewing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-file-pdf"></i> Reports</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="feature-list">
+                        <li><strong>Full Inventory Report:</strong> Complete product listing with details</li>
+                        <li><strong>Low Stock Alert:</strong> Products below threshold</li>
+                        <li><strong>Category Analysis:</strong> Value breakdown by category</li>
+                        <li><strong>ABC Analysis:</strong> Pareto analysis for inventory optimization</li>
+                        <li><strong>Reorder Report:</strong> Items needing replenishment</li>
+                        <li><strong>Export:</strong> Export data to CSV or HTML format</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-header">User Roles & Permissions</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Permissions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Admin</strong></td>
+                            <td>Full access to all features including user management</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Staff</strong></td>
+                            <td>Can manage inventory and view reports</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Viewer</strong></td>
+                            <td>Read-only access to inventory and dashboard</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-header">API Endpoints</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Endpoint</th>
+                            <th>Method</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>?action=create</code></td>
+                            <td>POST</td>
+                            <td>Create new product</td>
+                        </tr>
+                        <tr>
+                            <td><code>?action=get&id=X</code></td>
+                            <td>GET</td>
+                            <td>Get product details</td>
+                        </tr>
+                        <tr>
+                            <td><code>?action=update</code></td>
+                            <td>POST</td>
+                            <td>Update product</td>
+                        </tr>
+                        <tr>
+                            <td><code>?action=delete&id=X</code></td>
+                            <td>GET</td>
+                            <td>Delete product</td>
+                        </tr>
+                        <tr>
+                            <td><code>?action=alerts</code></td>
+                            <td>GET</td>
+                            <td>Get stock alerts</td>
+                        </tr>
+                        <tr>
+                            <td><code>?action=export-csv</code></td>
+                            <td>GET</td>
+                            <td>Export CSV</td>
+                        </tr>
+                        <tr>
+                            <td><code>?action=report</code></td>
+                            <td>GET</td>
+                            <td>Generate report</td>
+                        </tr>
+                        <tr>
+                            <td><code>?action=login</code></td>
+                            <td>POST</td>
+                            <td>User login</td>
+                        </tr>
+                        <tr>
+                            <td><code>?action=register</code></td>
+                            <td>POST</td>
+                            <td>User registration</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Testing Section -->
+        <section id="testing">
+            <h2 class="section-header"><i class="fas fa-flask"></i> Testing & Quality Assurance</h2>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Unit Testing with PHPUnit</h5>
+                </div>
+                <div class="card-body">
+                    <p>This project includes comprehensive unit tests covering:</p>
+                    <ul class="feature-list">
+                        <li>SecurityHelper validation and sanitization</li>
+                        <li>Product model CRUD operations</li>
+                        <li>User model authentication</li>
+                        <li>Category model operations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-header">Installation</h3>
+            <p>Install PHPUnit using Composer:</p>
+            <pre><code>composer install --dev</code></pre>
+            <p>Or install directly:</p>
+            <pre><code>composer require --dev phpunit/phpunit:^11.0</code></pre>
+
+            <h3 class="subsection-header">Running Tests</h3>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Run All Tests</h5>
+                </div>
+                <div class="card-body">
+                    <pre><code>vendor/bin/phpunit</code></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Run Specific Test Class</h5>
+                </div>
+                <div class="card-body">
+                    <pre><code>vendor/bin/phpunit tests/Unit/SecurityHelperTest.php</code></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Generate Coverage Report</h5>
+                </div>
+                <div class="card-body">
+                    <pre><code>vendor/bin/phpunit --coverage-html coverage</code></pre>
+                    <p style="margin-top: 1rem;">Coverage report will be generated in the <code>coverage/</code> directory</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section>
+            <h2 class="section-header"><i class="fas fa-shield-alt"></i> Security Features</h2>
+
+            <ul class="feature-list checked-items">
+                <li><strong>Password Hashing:</strong> BCrypt hashing for secure password storage</li>
+                <li><strong>SQL Injection Prevention:</strong> Prepared statements for all database queries</li>
+                <li><strong>XSS Protection:</strong> Input validation and output escaping</li>
+                <li><strong>CSRF Protection:</strong> Token-based protection against cross-site requests</li>
+                <li><strong>Input Validation:</strong> Comprehensive validation for all user inputs</li>
+                <li><strong>Rate Limiting:</strong> Protection against brute force attacks</li>
+                <li><strong>Audit Logging:</strong> Track all system changes and user actions</li>
+                <li><strong>Role-Based Access Control:</strong> Fine-grained permission management</li>
+            </ul>
+
+            <div class="alert-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Important Security Notes:</strong>
+                <ul style="margin-top: 1rem; margin-bottom: 0;">
+                    <li>Always change the default admin password immediately after setup</li>
+                    <li>Maintain regular database backups in production environments</li>
+                    <li>Never commit database credentials to version control</li>
+                    <li>Use HTTPS in production environments</li>
+                    <li>Regularly update PHP and MySQL versions</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section>
+            <h2 class="section-header"><i class="fas fa-tools"></i> Troubleshooting Guide</h2>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Database Connection Failed</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Ensure MySQL is running in XAMPP</li>
+                        <li>Check database credentials in <code>config/database.php</code></li>
+                        <li>Run setup.php again to reinitialize database</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Login Always Fails</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Check browser cookies/storage settings</li>
+                        <li>Clear browser cache and cookies</li>
+                        <li>Try creating a new user account</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Images Not Uploading</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Create <code>public/uploads/images/</code> folder if it doesn't exist</li>
+                        <li>Ensure folder permissions are writable (chmod 755)</li>
+                        <li>Check PHP upload limits in php.ini</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Port 3306 Already in Use</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Another MySQL instance may be running</li>
+                        <li>Change XAMPP MySQL port or stop conflicting service</li>
+                        <li>Check for other MySQL installations running</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section>
+            <h2 class="section-header"><i class="fas fa-rocket"></i> Performance & Optimization</h2>
+
+            <ul class="feature-list checked-items">
+                <li>All database queries use prepared statements</li>
+                <li>AJAX reduces unnecessary page reloads</li>
+                <li>Lazy loading for product images</li>
+                <li>CSS and JS minification recommended for production</li>
+                <li>Database indexes on frequently queried columns</li>
+                <li>Efficient query design for analytics and reports</li>
+                <li>Session caching for improved response times</li>
+            </ul>
+        </section>
+
+        <!-- Latest Updates -->
+        <section>
+            <h2 class="section-header"><i class="fas fa-history"></i> Version History & Updates</h2>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Version 2.0 - Advanced Features Release</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="feature-list checked-items">
+                        <li>User Authentication System (Login/Register with BCrypt)</li>
+                        <li>Comprehensive Dashboard with Real-time Statistics</li>
+                        <li>Multi-type Report Generator (5 different reports)</li>
+                        <li>CSV Export Functionality</li>
+                        <li>Dark Mode Theme Toggle</li>
+                        <li>Enhanced Security (Input Validation, SQL Injection Prevention)</li>
+                        <li>Low Stock Alerts & Notifications</li>
+                        <li>ABC Analysis for Inventory Optimization</li>
+                        <li>Category-based Analytics</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Info -->
+        <section style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+            <h3 class="subsection-header">About This Documentation</h3>
+            <p>This comprehensive documentation covers all aspects of the Inventory Management System project. It provides detailed information about features, setup, usage, and best practices for deployment and maintenance.</p>
+            
+            <p><strong>Project Type:</strong> Object-Oriented Programming (OOP) Final Project</p>
+            <p><strong>Created:</strong> January 2026</p>
+            <p><strong>License:</strong> Open Source - MIT License</p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container-main">
+            <p>&copy; 2026 Inventory Management System. All rights reserved.</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Built with PHP, MySQL, and Bootstrap 5</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

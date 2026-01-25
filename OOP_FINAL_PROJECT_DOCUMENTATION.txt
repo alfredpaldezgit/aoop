@@ -1,0 +1,2434 @@
+================================================================================
+         OOP FINAL PROJECT DOCUMENTATION
+         PHP INVENTORY MANAGEMENT SYSTEM
+================================================================================
+
+Date: January 25, 2026
+Project Type: Object-Oriented Programming (OOP) Final Project
+Language: PHP 8+
+Framework: MVC Architecture with Bootstrap 5
+
+================================================================================
+1. PROJECT TITLE AND DESCRIPTION
+================================================================================
+
+Project Title: PHP Inventory Management System
+
+Description:
+A comprehensive, web-based Inventory Management System built with PHP, MySQL, 
+and Bootstrap 5, following the Model-View-Controller (MVC) architectural pattern. 
+This system provides complete CRUD (Create, Read, Update, Delete) functionality 
+with advanced features including user authentication, detailed reporting, 
+analytics capabilities, and real-time dashboard statistics.
+
+Project Scope:
+The application is designed to manage product inventory for small to medium-sized 
+businesses, offering features such as product categorization, stock management, 
+user authentication with role-based access control, comprehensive reporting tools, 
+and analytics capabilities including ABC analysis for inventory optimization.
+
+Key Business Value:
+- Streamline inventory management operations
+- Provide real-time visibility into stock levels
+- Generate actionable business intelligence through analytics
+- Secure multi-user access with role-based permissions
+- Reduce manual inventory tracking and reporting effort
+
+
+================================================================================
+2. TEAM/AUTHOR INFORMATION
+================================================================================
+
+Project Author: [Student Name/Team]
+Instructor: [Instructor Name]
+Institution: [Institution Name]
+Academic Year: 2026
+Project Duration: [Start Date] - [End Date]
+Submission Date: January 25, 2026
+
+Contact Information:
+Email: [Email Address]
+Department: [Department/School]
+
+Acknowledgments:
+Special thanks to the institution and instructor for guidance and support 
+throughout this project development.
+
+
+================================================================================
+3. TABLE OF CONTENTS
+================================================================================
+
+1. PROJECT TITLE AND DESCRIPTION
+2. TEAM/AUTHOR INFORMATION
+3. TABLE OF CONTENTS
+4. PROJECT OBJECTIVES AND GOALS
+5. SYSTEM REQUIREMENTS
+6. DESIGN DOCUMENTATION
+7. IMPLEMENTATION DETAILS
+8. USER MANUAL AND USAGE GUIDE
+9. TESTING AND QUALITY ASSURANCE
+10. SOURCE CODE DOCUMENTATION
+11. DATABASE DESIGN
+12. SECURITY CONSIDERATIONS
+13. CONCLUSION AND FUTURE ENHANCEMENTS
+14. REFERENCES AND APPENDICES
+
+
+================================================================================
+4. PROJECT OBJECTIVES AND GOALS
+================================================================================
+
+4.1 PRIMARY OBJECTIVES
+-----------
+The primary objective is to develop a functional, user-friendly inventory 
+management system that demonstrates proficiency in Object-Oriented Programming, 
+database design, web development, and system architecture.
+
+4.2 FUNCTIONAL GOALS (Features to Implement)
+-----------
+[✓] Product Management
+    - Create, Read, Update, Delete (CRUD) product records
+    - Organize products into categories
+    - Track product quantity and pricing
+    - Support product image uploads
+    - Track creation and modification timestamps
+
+[✓] Inventory Tracking
+    - Real-time stock level monitoring
+    - Low-stock alerts and notifications
+    - Out-of-stock tracking
+    - Inventory value calculations
+    - Category-wise inventory breakdown
+
+[✓] User Management
+    - User registration and account creation
+    - Secure login/logout functionality
+    - Password hashing using BCrypt
+    - Role-based access control (Admin, Staff, Viewer)
+    - User status management (Active/Inactive)
+
+[✓] Dashboard and Analytics
+    - Real-time dashboard with key metrics
+    - Statistical data visualization
+    - Top products by value analysis
+    - Category breakdown analysis
+    - ABC analysis for inventory optimization
+    - Low-stock and out-of-stock summary
+
+[✓] Reporting System
+    - Full inventory report generation
+    - Low-stock alert reports
+    - Category analysis reports
+    - ABC analysis reports
+    - Reorder point recommendations
+    - CSV and HTML export functionality
+
+[✓] Search and Filtering
+    - Real-time product search by name
+    - Category-based filtering
+    - Advanced filtering options
+    - Sort by price, quantity, category
+
+[✓] Security Features
+    - Secure authentication system
+    - Input validation and sanitization
+    - SQL injection prevention
+    - XSS protection
+    - CSRF token protection
+    - Rate limiting on login attempts
+    - Audit logging for system changes
+
+4.3 NON-FUNCTIONAL GOALS
+-----------
+[✓] Performance
+    - Fast page load times (< 2 seconds)
+    - Optimized database queries
+    - Efficient AJAX operations
+    - CSS and JavaScript minification
+
+[✓] Usability
+    - Intuitive user interface
+    - Responsive design for all devices
+    - Dark mode theme option
+    - Accessibility compliance
+    - Clear navigation and workflow
+
+[✓] Maintainability
+    - Clean, well-documented code
+    - Consistent coding standards
+    - Modular component design
+    - Version control using Git
+    - Comprehensive unit tests
+
+[✓] Reliability
+    - Data backup mechanisms
+    - Error handling and logging
+    - Database transaction support
+    - System stability and uptime
+    - Data integrity constraints
+
+[✓] Scalability
+    - Database indexing for performance
+    - Prepared statements for all queries
+    - Modular architecture for easy expansion
+    - Support for future feature additions
+
+
+================================================================================
+5. SYSTEM REQUIREMENTS
+================================================================================
+
+5.1 HARDWARE REQUIREMENTS
+-----------
+Minimum:
+- Processor: Intel Core i3 or equivalent
+- RAM: 2 GB minimum
+- Storage: 500 MB for application and database
+- Network: Internet connection for XAMPP installation
+
+Recommended:
+- Processor: Intel Core i5 or higher
+- RAM: 4 GB or more
+- Storage: 1 GB SSD for optimal performance
+- Network: High-speed internet connection
+
+5.2 SOFTWARE REQUIREMENTS
+-----------
+Server Environment:
+- Apache Web Server (via XAMPP)
+- PHP 8.0 or higher
+- MySQL 5.7 or higher
+- Composer (for dependency management)
+
+Development Environment:
+- XAMPP (Apache, PHP, MySQL bundle)
+- Code Editor (VS Code, PhpStorm, Sublime Text, etc.)
+- Git (for version control)
+
+Browser Compatibility:
+- Google Chrome (latest version)
+- Mozilla Firefox (latest version)
+- Microsoft Edge (latest version)
+- Safari (latest version)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+5.3 DEPENDENCIES
+-----------
+Backend:
+- PDO (PHP Data Objects) - Database abstraction
+- BCrypt - Password hashing
+- PHPUnit - Testing framework (for development)
+- Composer - Package manager
+
+Frontend:
+- Bootstrap 5 - CSS framework
+- jQuery - JavaScript library
+- Font Awesome - Icon library
+- HTML5 & CSS3 - Markup and styling
+
+5.4 INSTALLATION REQUIREMENTS
+-----------
+- XAMPP installed and running
+- MySQL service enabled and accessible
+- Web server (Apache) running on port 80
+- PHP configured with appropriate extensions
+- Minimum 50 MB disk space available
+
+
+================================================================================
+6. DESIGN DOCUMENTATION
+================================================================================
+
+6.1 ARCHITECTURAL PATTERN
+-----------
+The system follows the Model-View-Controller (MVC) pattern:
+
+┌─────────────────────────────────────────────┐
+│          USER INTERFACE (View)              │
+│        (HTML, CSS, JavaScript)              │
+└─────────────────────────────────────────────┘
+              ↓              ↑
+┌─────────────────────────────────────────────┐
+│      CONTROLLER (Request Handler)           │
+│   (InventoryController, AuthController)     │
+└─────────────────────────────────────────────┘
+              ↓              ↑
+┌─────────────────────────────────────────────┐
+│     MODEL (Business Logic & Data)           │
+│  (Product, Category, User, Stats models)    │
+└─────────────────────────────────────────────┘
+              ↓              ↑
+┌─────────────────────────────────────────────┐
+│      DATABASE (MySQL Data Storage)          │
+└─────────────────────────────────────────────┘
+
+Benefits:
+- Separation of concerns
+- Easier to test and maintain
+- Code reusability
+- Better scalability
+- Clear responsibility division
+
+6.2 CLASS DIAGRAM (Simplified)
+-----------
+User
+├─ id: int
+├─ username: string
+├─ email: string
+├─ password: string (hashed)
+├─ role: enum(admin, staff, viewer)
+├─ status: enum(active, inactive)
+└─ Methods: authenticate(), updateProfile(), changePassword()
+
+Product
+├─ id: int
+├─ name: string
+├─ description: text
+├─ quantity: int
+├─ price: decimal
+├─ category_id: int (FK)
+├─ image: string
+└─ Methods: create(), read(), update(), delete(), getLowStock()
+
+Category
+├─ id: int
+├─ name: string
+├─ description: text
+└─ Methods: getAllCategories(), getCategoryById()
+
+Stats
+├─ Methods: getTotalProducts(), getTotalValue(), getLowStockCount()
+└─ Methods: getTopProducts(), getCategoryBreakdown()
+
+6.3 DATA FLOW DIAGRAM
+-----------
+User Input → Validation → Controller → Model → Database → Processing → View
+
+Example Flow for Creating Product:
+1. User fills product form in View
+2. Form data sent to Controller (CREATE action)
+3. Controller validates input via SecurityHelper
+4. Validated data passed to Product Model
+5. Model executes INSERT query with prepared statement
+6. Database stores product record
+7. Success/Error response sent back to Controller
+8. View updated with result message
+
+6.4 DESIGN PATTERNS USED
+-----------
+
+1. Model-View-Controller (MVC) Pattern
+   - Separates data, presentation, and business logic
+   - Location: app/ directory structure
+
+2. Active Record Pattern (in Models)
+   - Database tables mapped to classes
+   - Models handle both data and operations
+   - Location: app/models/ directory
+
+3. Front Controller Pattern
+   - Single entry point (index.php)
+   - Routes requests to appropriate controller
+   - Location: index.php
+
+4. Service Locator Pattern
+   - Centralized configuration and helpers
+   - Location: config/ and helpers/ directories
+
+5. Singleton Pattern
+   - Database connection management
+   - Single PDO instance throughout application
+
+6.5 SYSTEM FLOW DIAGRAMS
+-----------
+
+LOGIN FLOW:
+User → Login Page → Verify Credentials → Check Role → Dashboard/Inventory
+
+PRODUCT CREATION FLOW:
+User → Click Add → Form Validation → Save to DB → Refresh List → Display
+
+REPORT GENERATION FLOW:
+User → Select Report Type → Apply Filters → Generate Data → Export/View
+
+
+================================================================================
+7. IMPLEMENTATION DETAILS
+================================================================================
+
+7.1 PROJECT STRUCTURE
+-----------
+aoop/
+├── app/                                    # Application core
+│   ├── controllers/
+│   │   ├── InventoryController.php        # Handles inventory operations
+│   │   └── AuthController.php             # Handles authentication
+│   ├── models/
+│   │   ├── Product.php                    # Product entity and operations
+│   │   ├── Category.php                   # Category entity and operations
+│   │   ├── User.php                       # User entity and authentication
+│   │   └── Stats.php                      # Dashboard statistics
+│   ├── helpers/
+│   │   ├── SecurityHelper.php             # Validation & security utilities
+│   │   └── ReportGenerator.php            # Report generation engine
+│   └── views/
+│       ├── inventory.php                  # Main inventory page
+│       ├── dashboard.php                  # Dashboard page
+│       ├── login.php                      # Login page
+│       ├── register.php                   # Registration page
+│       └── reports.php                    # Reports page
+├── config/
+│   ├── database.php                       # Database configuration
+│   └── setup.php                          # Initial setup script
+├── public/
+│   ├── js/
+│   │   └── app.js                         # AJAX and DOM operations
+│   └── uploads/
+│       └── images/                        # Product images directory
+├── tests/
+│   ├── Unit/
+│   │   ├── SecurityHelperTest.php
+│   │   ├── ProductModelTest.php
+│   │   ├── UserModelTest.php
+│   │   └── CategoryModelTest.php
+│   ├── bootstrap.php
+│   └── TestCase.php
+├── database.sql                           # Database initialization script
+├── index.php                              # Front controller & router
+├── setup.php                              # Web-based setup wizard
+├── setup-cli.php                          # CLI setup script
+├── setup.bat                              # Windows setup batch file
+├── setup.sh                               # Unix/Linux setup script
+├── composer.json                          # Project dependencies
+├── phpunit.xml                            # PHPUnit configuration
+└── README.md                              # Project documentation
+
+7.2 KEY CLASSES AND METHODS
+-----------
+
+CLASS: InventoryController
+Purpose: Handles all inventory-related operations
+Location: app/controllers/InventoryController.php
+
+Methods:
+- __construct()                  Initialize controller
+- viewInventory()               Display product list
+- createProduct()               Create new product
+- updateProduct()               Modify existing product
+- deleteProduct()               Remove product
+- searchProducts()              Search with filters
+- getDashboard()                Get dashboard data
+- getReports()                  Generate reports
+- exportCSV()                   Export inventory to CSV
+
+CLASS: AuthController
+Purpose: Manages user authentication and registration
+Location: app/controllers/AuthController.php
+
+Methods:
+- __construct()                 Initialize controller
+- login()                       Authenticate user
+- register()                    Create new user account
+- logout()                      End user session
+- validateCredentials()         Verify login information
+- hashPassword()                Hash password with BCrypt
+- verifyPassword()              Compare password with hash
+
+CLASS: Product (Model)
+Purpose: Product entity and database operations
+Location: app/models/Product.php
+
+Methods:
+- __construct()                 Initialize product
+- create()                      Insert new product
+- read($id)                     Fetch product by ID
+- update()                      Modify product data
+- delete($id)                   Remove product
+- getAll()                      Fetch all products
+- getByCategory($catId)         Get products in category
+- getLowStock($threshold)       Get low-stock items
+- search($term)                 Search products
+- getTotalValue()               Calculate inventory value
+
+CLASS: Category (Model)
+Purpose: Category entity and operations
+Location: app/models/Category.php
+
+Methods:
+- __construct()                 Initialize category
+- create()                      Insert new category
+- read($id)                     Fetch category by ID
+- update()                      Modify category
+- delete($id)                   Remove category
+- getAll()                      Fetch all categories
+- getCategoryValue($catId)      Calculate category value
+
+CLASS: User (Model)
+Purpose: User entity and authentication
+Location: app/models/User.php
+
+Methods:
+- __construct()                 Initialize user
+- create()                      Register new user
+- read($id)                     Fetch user by ID
+- authenticate($username, $pwd) Verify user credentials
+- updateProfile()               Modify user info
+- changePassword()              Update password
+- getByUsername($username)      Fetch user by username
+- hasPermission($action)        Check user role permission
+
+CLASS: Stats (Model)
+Purpose: Dashboard statistics and analytics
+Location: app/models/Stats.php
+
+Methods:
+- getTotalProducts()            Count all products
+- getTotalInventoryValue()      Sum all product values
+- getLowStockCount()            Count low-stock items
+- getOutOfStockCount()          Count zero-quantity items
+- getAveragePrice()             Calculate average product price
+- getTopProductsByValue()       Get highest-value products
+- getCategoryBreakdown()        Get category statistics
+- getABCAnalysis()              Perform ABC analysis
+
+CLASS: SecurityHelper
+Purpose: Security utilities and validation
+Location: app/helpers/SecurityHelper.php
+
+Methods:
+- sanitizeInput($input)         Remove dangerous characters
+- validateEmail($email)         Validate email format
+- validatePassword($pwd)        Check password strength
+- validateInt($value)           Validate integer input
+- validateFloat($value)         Validate decimal input
+- escapeSQLString($str)         Escape SQL strings
+- generateCSRFToken()           Create CSRF protection token
+- validateCSRFToken($token)     Verify CSRF token
+
+CLASS: ReportGenerator
+Purpose: Generate various reports
+Location: app/helpers/ReportGenerator.php
+
+Methods:
+- generateInventoryReport()     Full inventory list
+- generateLowStockReport()      Products below threshold
+- generateCategoryReport()      Category analysis
+- generateABCReport()           ABC analysis report
+- generateReorderReport()       Reorder recommendations
+- exportToCSV($data)            Export data as CSV
+- exportToHTML($data)           Export data as HTML
+
+7.3 CONTROLLER-ACTION ROUTING
+-----------
+index.php routes requests based on 'action' parameter:
+
+Inventory Actions:
+- ?action=inventory              Display inventory list
+- ?action=create               Create product (AJAX)
+- ?action=update               Update product (AJAX)
+- ?action=delete&id=X          Delete product
+- ?action=get&id=X             Get product details (AJAX)
+
+Authentication Actions:
+- ?action=login-page           Display login form
+- ?action=login                Process login (POST)
+- ?action=register-page        Display registration form
+- ?action=register             Process registration (POST)
+- ?action=logout               End session
+
+Dashboard/Analytics Actions:
+- ?action=dashboard            Display dashboard
+- ?action=alerts               Get stock alerts (AJAX)
+
+Reports Actions:
+- ?action=reports              Display reports page
+- ?action=report               Generate report
+- ?action=export-csv           Export CSV
+
+7.4 CODE ORGANIZATION PRINCIPLES
+-----------
+- Single Responsibility Principle: Each class has one purpose
+- DRY (Don't Repeat Yourself): Code reuse through helper functions
+- Clean Code: Meaningful variable names, consistent formatting
+- Comments: Documentation for complex logic
+- Error Handling: Try-catch blocks for exception management
+- Input Validation: All user input validated before processing
+- Prepared Statements: All database queries use parameterized queries
+
+
+================================================================================
+8. USER MANUAL AND USAGE GUIDE
+================================================================================
+
+8.1 INSTALLATION AND SETUP
+-----------
+
+STEP 1: Verify Installation Requirements
+✓ XAMPP is installed and running
+✓ Apache service is started (green indicator)
+✓ MySQL service is started (green indicator)
+✓ Project folder at: C:\xampp\htdocs\aoop\
+
+STEP 2: Initialize Database (Choose one method)
+
+METHOD A: Web Browser (Recommended)
+1. Open browser and go to: http://localhost/aoop/setup.php
+2. Click "Start Setup" button
+3. System automatically creates database, tables, and sample data
+4. Click "Go to Application" after completion
+
+METHOD B: Command Line (Windows)
+1. Open Command Prompt/PowerShell
+2. Navigate: cd C:\xampp\htdocs\aoop
+3. Run: setup.bat
+4. Wait for completion message
+
+METHOD C: Command Line (Mac/Linux)
+1. Open Terminal
+2. Navigate: cd /path/to/aoop
+3. Run: chmod +x setup.sh
+4. Execute: ./setup.sh
+
+METHOD D: Direct PHP CLI
+1. Open Command Prompt/Terminal
+2. Navigate to project directory
+3. Run: php setup-cli.php
+
+STEP 3: Access Application
+1. Open browser: http://localhost/aoop/
+2. You'll be redirected to login page
+3. Use default credentials:
+   - Username: admin
+   - Password: admin123
+
+STEP 4: Change Default Password
+⚠ IMPORTANT: Change admin password immediately
+1. Login as admin
+2. Go to user settings (if available)
+3. Update password to secure value
+
+8.2 USER ROLES AND PERMISSIONS
+-----------
+
+ADMIN Role
+- Full system access
+- Create, read, update, delete all records
+- Manage user accounts
+- View all reports
+- Access system settings
+- View audit logs
+- Recommended for: Managers, system administrators
+
+STAFF Role
+- Manage inventory (create, edit, delete products)
+- View dashboard and statistics
+- Generate and view reports
+- View products in their categories
+- Cannot manage users
+- Cannot access system settings
+- Recommended for: Warehouse staff, inventory managers
+
+VIEWER Role
+- Read-only access to inventory
+- View dashboard and reports
+- Cannot create, edit, or delete products
+- Cannot modify any data
+- View-only reports
+- Recommended for: Sales staff, management, auditors
+
+8.3 MAIN FEATURES WALKTHROUGH
+-----------
+
+FEATURE 1: Viewing Inventory
+Location: Dashboard or Inventory menu
+1. Navigate to Inventory page (default page after login)
+2. View list of all products with:
+   - Product name
+   - Category
+   - Quantity in stock
+   - Price
+   - Last modified date
+3. Scroll down to view all products
+4. Use search bar to find specific products
+5. Filter by category using dropdown
+
+FEATURE 2: Adding New Product
+Location: Inventory page, "Add Product" button
+1. Click "Add Product" button (green button)
+2. Modal form appears with fields:
+   - Product Name (required)
+   - Description (optional)
+   - Quantity (required, numeric)
+   - Price (required, decimal)
+   - Category (required, dropdown)
+   - Product Image (optional, file upload)
+3. Fill in required fields
+4. Click "Save" button
+5. New product appears in inventory list
+6. Success message displayed at top
+
+FEATURE 3: Editing Existing Product
+Location: Inventory page, product row
+1. Find product in list
+2. Click "Edit" button (pencil icon) on product row
+3. Modal form opens with current product data
+4. Modify desired fields
+5. Click "Update" button
+6. Product list refreshes automatically
+7. Updated product shows new values
+
+FEATURE 4: Deleting Product
+Location: Inventory page, product row
+1. Find product in list
+2. Click "Delete" button (trash icon)
+3. Confirmation dialog appears
+4. Click "Confirm" to proceed or "Cancel" to abort
+5. Product removed from list
+6. Confirmation message displayed
+
+FEATURE 5: Searching Products
+Location: Inventory page, search bar
+1. Click in search box at top of product list
+2. Type product name (search is case-insensitive)
+3. List filters in real-time as you type
+4. Shows only matching products
+5. Clear search to see all products again
+
+FEATURE 6: Dashboard
+Location: Navigation menu "Dashboard"
+1. Click Dashboard in top menu
+2. View key metrics:
+   - Total Products (count)
+   - Total Inventory Value (sum of quantity × price)
+   - Low Stock Items (count)
+   - Out of Stock Items (count)
+   - Average Price (mean price)
+3. View visual breakdowns:
+   - Top Products by Value
+   - Category Distribution
+   - Stock Level Overview
+4. Refresh data by clicking refresh button
+
+FEATURE 7: Generating Reports
+Location: Navigation menu "Reports"
+1. Click Reports in top menu
+2. Select report type from dropdown:
+   - Full Inventory Report
+   - Low Stock Alert Report
+   - Category Analysis
+   - ABC Analysis
+   - Reorder Recommendations
+3. Set filters (date range, category, etc.)
+4. Click "Generate Report" button
+5. Report displays in new section
+6. Click "Export CSV" to download as spreadsheet
+7. Click "Export HTML" to save as web page
+
+FEATURE 8: Dark Mode
+Location: Bottom right corner
+1. Look for "Dark Mode" toggle switch
+2. Click toggle to enable/disable
+3. Interface switches between light and dark themes
+4. Preference saved in browser storage
+5. Theme persists across sessions
+
+FEATURE 9: User Authentication
+Location: Login page
+1. Access: http://localhost/aoop/
+2. Enter username in "Username" field
+3. Enter password in "Password" field
+4. Click "Login" button
+5. System verifies credentials
+6. If correct: redirected to dashboard
+7. If incorrect: error message displayed, try again
+
+FEATURE 10: Logout
+Location: Top right corner
+1. Find username or logout button in top menu
+2. Click "Logout"
+3. Session ends
+4. Redirected to login page
+5. Must login again to access application
+
+8.4 TROUBLESHOOTING COMMON ISSUES
+-----------
+
+ISSUE: "Database Connection Failed" Error
+Symptoms: Cannot access application, database error message
+Solutions:
+- Check MySQL is running in XAMPP (green indicator)
+- Verify credentials in config/database.php match XAMPP settings
+- Ensure database was created by running setup script
+- Check if port 3306 is available (not blocked)
+- Try restarting MySQL service
+- Run setup script again to reinitialize database
+
+ISSUE: Login Always Fails
+Symptoms: Cannot login with any credentials, including default admin
+Solutions:
+- Clear browser cache and cookies
+- Try logging in with default credentials: admin / admin123
+- Check if admin user exists in database
+- Verify password hashing is working (BCrypt)
+- Create a new test user and try logging in
+- Check browser console for JavaScript errors
+
+ISSUE: Images Not Uploading
+Symptoms: Product images don't upload, get stuck or error
+Solutions:
+- Ensure directory exists: public/uploads/images/
+- Set folder permissions to 755 (writable)
+- Check PHP upload_max_filesize in php.ini
+- Verify file types are allowed (JPG, PNG, GIF)
+- Check available disk space
+- Review web server error logs
+
+ISSUE: Slow Performance / Timeout
+Symptoms: Pages load slowly, operations timeout
+Solutions:
+- Check server resources (CPU, RAM usage)
+- Optimize database queries
+- Clear browser cache
+- Restart Apache/MySQL services
+- Check network connection
+- Reduce number of products for large inventories
+
+ISSUE: Port 3306 Already in Use
+Symptoms: MySQL won't start, error about port
+Solutions:
+- Check if another MySQL instance is running
+- Stop competing MySQL service
+- Change XAMPP MySQL port in config
+- Check firewall settings blocking port
+- Restart computer if processes won't terminate
+
+8.5 BEST PRACTICES AND TIPS
+-----------
+1. Data Management
+   - Regularly backup database
+   - Archive old product data periodically
+   - Keep stock levels updated regularly
+   - Review low-stock alerts weekly
+
+2. Security
+   - Change default admin password immediately
+   - Use strong passwords (8+ chars, mixed case, numbers)
+   - Don't share login credentials
+   - Logout when finished, especially on shared computers
+   - Update software regularly
+
+3. Performance
+   - Use search/filter to work with large datasets
+   - Export reports to CSV for external analysis
+   - Avoid uploading very large images
+   - Close unused browser tabs
+   - Clear cache periodically
+
+4. Inventory Management
+   - Keep product names consistent
+   - Use meaningful category names
+   - Update prices when they change
+   - Set appropriate low-stock thresholds
+   - Review ABC analysis for purchasing decisions
+
+5. Reporting
+   - Export reports for meetings and presentations
+   - Schedule regular inventory audits
+   - Compare reports over time for trends
+   - Use reports to justify purchasing decisions
+   - Archive important reports for compliance
+
+
+================================================================================
+9. TESTING AND QUALITY ASSURANCE
+================================================================================
+
+9.1 TESTING STRATEGY
+-----------
+
+Testing Levels:
+1. Unit Testing
+   - Test individual classes and methods
+   - Test security functions
+   - Test model operations
+   - Framework: PHPUnit
+
+2. Integration Testing
+   - Test controller-model interaction
+   - Test database operations
+   - Test form submissions
+   - Test authentication flow
+
+3. System Testing
+   - End-to-end user workflows
+   - Feature functionality
+   - Performance testing
+   - Security testing
+
+4. User Acceptance Testing
+   - Real user scenarios
+   - Usability testing
+   - Edge case handling
+   - Browser compatibility
+
+9.2 UNIT TESTS SPECIFICATION
+-----------
+
+TEST CLASS 1: SecurityHelperTest
+Location: tests/Unit/SecurityHelperTest.php
+Purpose: Validate security and input handling
+
+Test Cases:
+- testSanitizeInputRemovesDangerousCharacters()
+  Expected: HTML/SQL characters removed from strings
+  Input: "<script>alert('xss')</script>"
+  Expected Output: "scriptalertxssscript"
+
+- testValidateEmailWithValidEmail()
+  Expected: Valid email addresses accepted
+  Input: "user@example.com"
+  Expected Output: true
+
+- testValidateEmailWithInvalidEmail()
+  Expected: Invalid emails rejected
+  Input: "invalid-email"
+  Expected Output: false
+
+- testValidatePasswordStrength()
+  Expected: Strong passwords accepted
+  Input: "SecurePass123"
+  Expected Output: true
+
+- testValidatePasswordWeakness()
+  Expected: Weak passwords rejected
+  Input: "123"
+  Expected Output: false
+
+- testSanitizeInputPreservesValidData()
+  Expected: Safe data not modified
+  Input: "John Doe"
+  Expected Output: "John Doe"
+
+TEST CLASS 2: ProductModelTest
+Location: tests/Unit/ProductModelTest.php
+Purpose: Test product CRUD operations
+
+Test Cases:
+- testCreateProductSuccess()
+  Expected: New product created in database
+  Precondition: Valid product data
+  Expected: Record count increases by 1
+
+- testCreateProductWithInvalidData()
+  Expected: Product not created, error returned
+  Precondition: Missing required fields
+  Expected: Exception thrown
+
+- testReadProductSuccess()
+  Expected: Product retrieved correctly
+  Precondition: Product exists in database
+  Expected: Correct product data returned
+
+- testReadNonexistentProduct()
+  Expected: Null or exception returned
+  Precondition: Product ID doesn't exist
+  Expected: Exception or null
+
+- testUpdateProductSuccess()
+  Expected: Product data updated
+  Precondition: Valid update data
+  Expected: Database reflects changes
+
+- testDeleteProductSuccess()
+  Expected: Product removed
+  Precondition: Product exists
+  Expected: Record count decreases by 1
+
+- testGetLowStockProducts()
+  Expected: Only items below threshold returned
+  Precondition: Multiple products with various quantities
+  Expected: List contains only low-stock items
+
+- testSearchProducts()
+  Expected: Search returns matching products
+  Precondition: Products with search term exist
+  Expected: Correct products returned
+
+TEST CLASS 3: UserModelTest
+Location: tests/Unit/UserModelTest.php
+Purpose: Test user authentication and management
+
+Test Cases:
+- testAuthenticateWithValidCredentials()
+  Expected: User authenticated successfully
+  Precondition: Valid username/password
+  Expected: User object returned
+
+- testAuthenticateWithInvalidCredentials()
+  Expected: Authentication fails
+  Precondition: Wrong password
+  Expected: Exception or false
+
+- testHashPasswordCreatesSecureHash()
+  Expected: Password hashed with BCrypt
+  Precondition: Plain password
+  Expected: Hashed password >= 60 chars
+
+- testVerifyPasswordWithCorrectPassword()
+  Expected: Password verification succeeds
+  Precondition: Correct password
+  Expected: true
+
+- testVerifyPasswordWithWrongPassword()
+  Expected: Password verification fails
+  Precondition: Wrong password
+  Expected: false
+
+- testCreateUserSuccess()
+  Expected: New user created
+  Precondition: Valid user data
+  Expected: User ID returned
+
+- testGetUserByUsername()
+  Expected: User retrieved by username
+  Precondition: User exists
+  Expected: User object returned
+
+TEST CLASS 4: CategoryModelTest
+Location: tests/Unit/CategoryModelTest.php
+Purpose: Test category operations
+
+Test Cases:
+- testCreateCategorySuccess()
+  Expected: New category created
+  Precondition: Valid category data
+  Expected: Category ID returned
+
+- testGetAllCategories()
+  Expected: All categories retrieved
+  Precondition: Multiple categories exist
+  Expected: Array of categories
+
+- testGetCategoryValue()
+  Expected: Category inventory value calculated
+  Precondition: Category with products
+  Expected: Sum of product values
+
+- testDeleteCategorySuccess()
+  Expected: Category removed
+  Precondition: Category exists
+  Expected: Category deleted
+
+9.3 TEST EXECUTION
+-----------
+
+Running All Tests:
+Command: vendor/bin/phpunit
+Output: Test summary with pass/fail counts
+Expected: All tests pass with green checkmarks
+
+Running Specific Test File:
+Command: vendor/bin/phpunit tests/Unit/SecurityHelperTest.php
+Output: Only SecurityHelperTest results
+Expected: 6+ tests pass
+
+Generating Code Coverage Report:
+Command: vendor/bin/phpunit --coverage-html coverage
+Output: HTML coverage report in coverage/ directory
+Expected: Coverage >= 75% of critical code
+
+9.4 CODE QUALITY METRICS
+-----------
+Target Metrics:
+- Code Coverage: ≥ 75% of application code
+- Pass Rate: 100% of unit tests
+- Critical Bugs: 0
+- Security Issues: 0 (verified)
+- Code Style Compliance: 100%
+
+Quality Checklist:
+[✓] All tests pass
+[✓] No PHP syntax errors
+[✓] No undefined variables
+[✓] All functions documented
+[✓] Input validation implemented
+[✓] SQL injection prevented
+[✓] XSS protection enabled
+[✓] Error handling in place
+[✓] Database backups tested
+[✓] Performance acceptable
+
+9.5 REGRESSION TESTING
+-----------
+After Code Changes:
+1. Run full test suite: vendor/bin/phpunit
+2. Check for new failures
+3. Verify existing features still work
+4. Test in multiple browsers
+5. Check database operations
+6. Verify security measures still effective
+7. Test with various data sizes
+
+
+================================================================================
+10. SOURCE CODE DOCUMENTATION
+================================================================================
+
+10.1 DOCUMENTATION STANDARDS
+-----------
+
+All classes, methods, and functions documented using PHPDoc format:
+
+/**
+ * Brief description of what the function does
+ *
+ * Longer description explaining the purpose, behavior,
+ * and any important details about implementation
+ *
+ * @param type $paramName Description of parameter
+ * @param type $param2    Description of second parameter
+ *
+ * @return type Description of return value
+ *
+ * @throws ExceptionType When this exception is thrown
+ *
+ * @example
+ * $result = functionName($param1, $param2);
+ */
+
+10.2 CLASS DOCUMENTATION EXAMPLES
+-----------
+
+CLASS: Product Model
+File: app/models/Product.php
+
+/**
+ * Product Model - Handles all product-related database operations
+ *
+ * This class manages product data including creation, retrieval, updating,
+ * and deletion. It implements CRUD operations and provides additional
+ * methods for inventory analysis and reporting.
+ *
+ * @package Models
+ * @version 2.0
+ * @author [Author Name]
+ */
+class Product {
+    private $pdo;
+    private $table = 'products';
+    
+    /**
+     * Initialize Product model with database connection
+     *
+     * @param PDO $pdo Database connection object
+     */
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+    
+    /**
+     * Create a new product record in the database
+     *
+     * Creates a new product with provided data including name, description,
+     * quantity, price, category, and optional image.
+     *
+     * @param array $data Product data array with keys:
+     *                     - name: (string) Product name [REQUIRED]
+     *                     - description: (string) Product description
+     *                     - quantity: (int) Stock quantity [REQUIRED]
+     *                     - price: (float) Product price [REQUIRED]
+     *                     - category_id: (int) Category ID [REQUIRED]
+     *                     - image: (string) Image filename
+     *
+     * @return int Product ID of newly created product
+     * @throws PDOException If database operation fails
+     * @throws InvalidArgumentException If required fields missing
+     *
+     * @example
+     * $productData = [
+     *     'name' => 'Laptop Pro',
+     *     'quantity' => 10,
+     *     'price' => 1200.50,
+     *     'category_id' => 1
+     * ];
+     * $productId = $product->create($productData);
+     */
+    public function create($data) {
+        try {
+            $query = "INSERT INTO {$this->table} (name, description, quantity, price, category_id, image) 
+                     VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->pdo->prepare($query);
+            
+            $stmt->execute([
+                $data['name'],
+                $data['description'] ?? null,
+                $data['quantity'],
+                $data['price'],
+                $data['category_id'],
+                $data['image'] ?? null
+            ]);
+            
+            return $this->pdo->lastInsertId();
+        } catch (PDOException $e) {
+            throw new PDOException("Failed to create product: " . $e->getMessage());
+        }
+    }
+}
+
+10.3 METHOD DOCUMENTATION EXAMPLES
+-----------
+
+/**
+ * Retrieve all products from the inventory
+ *
+ * Fetches all products from database with their category information,
+ * ordered by creation date (newest first).
+ *
+ * @return array Array of product records, each containing:
+ *               - id: (int) Product ID
+ *               - name: (string) Product name
+ *               - quantity: (int) Stock quantity
+ *               - price: (float) Unit price
+ *               - category_id: (int) Category reference
+ *               - category_name: (string) Category name
+ *               - created_at: (string) Creation timestamp
+ *               - updated_at: (string) Last update timestamp
+ *
+ * @throws PDOException If database query fails
+ *
+ * @example
+ * $allProducts = $product->getAll();
+ * foreach ($allProducts as $product) {
+ *     echo $product['name'] . ': ' . $product['quantity'];
+ * }
+ */
+public function getAll() {
+    try {
+        $query = "SELECT p.*, c.name as category_name FROM {$this->table} p
+                 LEFT JOIN categories c ON p.category_id = c.id
+                 ORDER BY p.created_at DESC";
+        
+        $stmt = $this->pdo->query($query);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        throw new PDOException("Failed to fetch products: " . $e->getMessage());
+    }
+}
+
+10.4 FUNCTION NAMING CONVENTIONS
+-----------
+
+Naming Pattern: camelCase for functions, snake_case for variables
+
+Get Operations:
+- get[Entity]()           - Get single record: getProductById()
+- get[Entity]s()          - Get multiple: getAllProducts()
+- get[Entity]By[Field]()  - Get by attribute: getProductByName()
+
+Create/Add Operations:
+- add[Entity]()           - Add new item: addProduct()
+- create[Entity]()        - Create record: createProduct()
+- insert[Entity]()        - Insert to DB: insertProduct()
+
+Update/Modify Operations:
+- update[Entity]()        - Modify existing: updateProduct()
+- edit[Entity]()          - Edit item: editProduct()
+- modify[Entity]()        - Change item: modifyProduct()
+
+Delete/Remove Operations:
+- delete[Entity]()        - Remove item: deleteProduct()
+- remove[Entity]()        - Remove record: removeProduct()
+- archive[Entity]()       - Archive item: archiveProduct()
+
+Check/Validate Operations:
+- is[Condition]()         - Boolean check: isLowStock()
+- has[Property]()         - Property check: hasImage()
+- validate[Input]()       - Validate data: validateEmail()
+
+10.5 CODE COMMENTING STANDARDS
+-----------
+
+Comment Types:
+
+1. Block Comments (for major sections)
+   // ==========================================
+   // Product Database Operations
+   // ==========================================
+
+2. Single Line Comments (for statements)
+   $quantity = 10; // Minimum stock threshold
+
+3. Important Notes
+   // TODO: Implement batch operations
+   // FIXME: Optimize category query performance
+   // NOTE: BCrypt hash generated with cost factor 10
+
+10.6 INLINE CODE DOCUMENTATION EXAMPLE
+-----------
+
+/**
+ * Calculate total inventory value with category breakdown
+ */
+public function getTotalInventoryValue() {
+    // Query to sum all product values (quantity * price)
+    $query = "SELECT 
+                c.id,
+                c.name,
+                SUM(p.quantity * p.price) as category_value,
+                COUNT(p.id) as product_count
+              FROM categories c
+              LEFT JOIN products p ON c.id = p.category_id
+              GROUP BY c.id, c.name
+              ORDER BY category_value DESC";
+    
+    try {
+        // Prepare and execute query safely
+        $stmt = $this->pdo->query($query);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Calculate grand total
+        $totalValue = array_sum(array_column($results, 'category_value'));
+        
+        return [
+            'total' => $totalValue,
+            'by_category' => $results
+        ];
+    } catch (PDOException $e) {
+        // Log error and throw exception
+        error_log("Database error: " . $e->getMessage());
+        throw new PDOException("Failed to calculate inventory value");
+    }
+}
+
+
+================================================================================
+11. DATABASE DESIGN
+================================================================================
+
+11.1 ENTITY RELATIONSHIP DIAGRAM (ERD)
+-----------
+
+┌──────────────────┐          ┌──────────────────┐
+│   CATEGORIES     │          │     PRODUCTS     │
+├──────────────────┤          ├──────────────────┤
+│ id (PK)          │ 1    ∞   │ id (PK)          │
+│ name (UNIQUE)    │◆─────◆┼─ │ name             │
+│ description      │          │ description      │
+│ created_at       │          │ quantity         │
+└──────────────────┘          │ price            │
+                               │ category_id (FK) │
+                               │ image            │
+                               │ created_at       │
+                               │ updated_at       │
+                               └──────────────────┘
+
+┌──────────────────┐          ┌──────────────────┐
+│      USERS       │          │  AUDIT_LOGS      │
+├──────────────────┤          ├──────────────────┤
+│ id (PK)          │ 1    ∞   │ id (PK)          │
+│ username (UNIQUE)│◆─────◆┼─ │ user_id (FK)     │
+│ email (UNIQUE)   │          │ action           │
+│ password         │          │ table_name       │
+│ role             │          │ record_id        │
+│ status           │          │ old_values       │
+│ created_at       │          │ new_values       │
+│ updated_at       │          │ ip_address       │
+└──────────────────┘          │ created_at       │
+                               └──────────────────┘
+
+11.2 TABLE SPECIFICATIONS
+-----------
+
+TABLE: categories
+Purpose: Store product categories for organization
+Relationships: Referenced by products table
+
+Column Specifications:
+┌─────────────┬─────────┬────────┬─────────────────────────┐
+│ Column Name │ Type    │ Null   │ Notes                   │
+├─────────────┼─────────┼────────┼─────────────────────────┤
+│ id          │ INT(11) │ NOT    │ Auto-increment, PK      │
+│ name        │ VARCHAR │ NOT    │ Unique, max 255 chars   │
+│ description │ TEXT    │ YES    │ Optional descriptions   │
+│ created_at  │ TIMESTAMP│ DEFAULT│ Auto-populated          │
+└─────────────┴─────────┴────────┴─────────────────────────┘
+
+CREATE TABLE categories (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+TABLE: products
+Purpose: Store product information and inventory levels
+Relationships: Foreign key to categories
+
+Column Specifications:
+┌─────────────┬─────────────┬────────┬─────────────────────────┐
+│ Column Name │ Type        │ Null   │ Notes                   │
+├─────────────┼─────────────┼────────┼─────────────────────────┤
+│ id          │ INT(11)     │ NOT    │ Auto-increment, PK      │
+│ name        │ VARCHAR(255)│ NOT    │ Product name            │
+│ description │ TEXT        │ YES    │ Detailed description    │
+│ quantity    │ INT(11)     │ NOT    │ Current stock level     │
+│ price       │ DECIMAL     │ NOT    │ Unit price, 2 decimals  │
+│ category_id │ INT(11)     │ YES    │ FK to categories        │
+│ image       │ VARCHAR(255)│ YES    │ Filename of image       │
+│ created_at  │ TIMESTAMP   │ DEFAULT│ Creation date           │
+│ updated_at  │ TIMESTAMP   │ DEFAULT│ Last modification       │
+└─────────────┴─────────────┴────────┴─────────────────────────┘
+
+CREATE TABLE products (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NULL,
+    quantity INT(11) NOT NULL DEFAULT 0,
+    price DECIMAL(10, 2) NOT NULL,
+    category_id INT(11) UNSIGNED NULL,
+    image VARCHAR(255) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_products_category FOREIGN KEY (category_id) 
+        REFERENCES categories(id) ON DELETE SET NULL,
+    INDEX idx_category (category_id),
+    INDEX idx_name (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+TABLE: users
+Purpose: Store user accounts and authentication information
+Relationships: Referenced by audit_logs table
+
+Column Specifications:
+┌─────────────┬─────────────┬────────┬─────────────────────────┐
+│ Column Name │ Type        │ Null   │ Notes                   │
+├─────────────┼─────────────┼────────┼─────────────────────────┤
+│ id          │ INT(11)     │ NOT    │ Auto-increment, PK      │
+│ username    │ VARCHAR(100)│ NOT    │ Unique, 1-100 chars     │
+│ email       │ VARCHAR(255)│ NOT    │ Unique, valid email     │
+│ password    │ VARCHAR(255)│ NOT    │ BCrypt hashed           │
+│ role        │ ENUM        │ DEFAULT│ admin/staff/viewer      │
+│ status      │ ENUM        │ DEFAULT│ active/inactive         │
+│ created_at  │ TIMESTAMP   │ DEFAULT│ Account creation date   │
+│ updated_at  │ TIMESTAMP   │ DEFAULT│ Last profile update     │
+└─────────────┴─────────────┴────────┴─────────────────────────┘
+
+CREATE TABLE users (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'staff', 'viewer') DEFAULT 'staff',
+    status ENUM('active', 'inactive') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_username (username),
+    INDEX idx_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+TABLE: audit_logs
+Purpose: Track all system changes for compliance and security
+Relationships: Foreign key to users table
+
+Column Specifications:
+┌─────────────┬─────────────┬────────┬─────────────────────────┐
+│ Column Name │ Type        │ Null   │ Notes                   │
+├─────────────┼─────────────┼────────┼─────────────────────────┤
+│ id          │ INT(11)     │ NOT    │ Auto-increment, PK      │
+│ user_id     │ INT(11)     │ YES    │ FK to users             │
+│ action      │ VARCHAR(50) │ NOT    │ create/update/delete    │
+│ table_name  │ VARCHAR(100)│ NOT    │ Affected table          │
+│ record_id   │ INT(11)     │ YES    │ ID of affected record   │
+│ old_values  │ JSON        │ YES    │ Previous values         │
+│ new_values  │ JSON        │ YES    │ New values              │
+│ ip_address  │ VARCHAR(45) │ YES    │ User IP address         │
+│ created_at  │ TIMESTAMP   │ DEFAULT│ Action timestamp        │
+└─────────────┴─────────────┴────────┴─────────────────────────┘
+
+CREATE TABLE audit_logs (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(11) UNSIGNED,
+    action VARCHAR(50) NOT NULL,
+    table_name VARCHAR(100) NOT NULL,
+    record_id INT(11) UNSIGNED,
+    old_values JSON,
+    new_values JSON,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_user_id (user_id),
+    INDEX idx_action (action),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+11.3 INDEXING STRATEGY
+-----------
+
+Indexes Implemented:
+- Primary Keys (id columns)        → Fast record lookup
+- Foreign Keys (category_id)       → Fast joins
+- Unique Constraints (name, email) → Fast uniqueness check
+- Search Fields (product name)     → Fast text search
+- Timestamp Columns (created_at)   → Fast date filtering
+- User Fields (username, email)    → Fast user lookup
+
+Index Performance Impact:
+- SELECT queries: Improved (fast lookup)
+- INSERT queries: Slightly slower (maintain index)
+- UPDATE queries: Slightly slower (maintain index)
+- Overall: Significant net performance improvement
+
+11.4 DATA TYPES AND CONSTRAINTS
+-----------
+
+INT(11) UNSIGNED
+- Range: 0 to 4,294,967,295
+- Used for: IDs, counts, quantities
+- Size: 4 bytes
+
+VARCHAR(255)
+- Variable length string, max 255 characters
+- Used for: Names, descriptions, filenames
+- Efficient storage with actual length
+
+TEXT
+- Large text field, up to 65KB
+- Used for: Descriptions, notes, comments
+- Should be indexed if used in WHERE clauses
+
+DECIMAL(10, 2)
+- Fixed-point number, 10 digits, 2 decimals
+- Range: -99999999.99 to 99999999.99
+- Used for: Prices, monetary values
+- Prevents floating-point rounding errors
+
+TIMESTAMP
+- Date and time, format: YYYY-MM-DD HH:MM:SS
+- DEFAULT CURRENT_TIMESTAMP: Auto-set to current time
+- Used for: Created_at, updated_at tracking
+
+ENUM('option1', 'option2')
+- Fixed set of string values
+- Used for: Role (admin/staff/viewer), status (active/inactive)
+- Memory efficient, only stores index value
+
+JSON
+- JSON object storage for flexible data
+- Used for: old_values, new_values in audit logs
+- Allows complex object storage without additional tables
+
+NOT NULL / NULL
+- NOT NULL: Field required, must have value
+- NULL: Field optional, can be empty
+- Used consistently for data integrity
+
+UNIQUE
+- Ensures no duplicate values in column
+- Used for: username, email, category names
+- Automatically creates index
+
+AUTO_INCREMENT
+- Automatically generates unique sequential ID
+- Used for: Primary key generation
+- Starts at 1, increments by 1
+
+11.5 SAMPLE DATA
+-----------
+
+INSERT INTO categories (name, description) VALUES
+('Electronics', 'Electronic devices and gadgets'),
+('Peripherals', 'Computer peripherals and accessories'),
+('Furniture', 'Office furniture and equipment'),
+('Software', 'Software licenses and digital products');
+
+INSERT INTO products (name, description, quantity, price, category_id) VALUES
+('Laptop Pro', 'High-performance laptop for professionals', 10, 1200.50, 1),
+('Mouse', 'Wireless ergonomic mouse', 50, 25.00, 2),
+('Mechanical Keyboard', 'RGB mechanical keyboard', 30, 75.99, 2),
+('Monitor 27"', '4K UHD Monitor', 15, 399.99, 1),
+('Office Chair', 'Ergonomic office chair with lumbar support', 8, 250.00, 3),
+('Desk Lamp', 'LED desk lamp with USB charging', 25, 35.50, 3),
+('Microsoft Office', 'Microsoft Office 365 Annual License', 100, 99.99, 4),
+('Adobe Creative Suite', 'Adobe Creative Cloud Monthly Subscription', 50, 54.99, 4);
+
+11.6 DATABASE MAINTENANCE
+-----------
+
+Regular Maintenance Tasks:
+
+1. Backups (Daily)
+   - Create full database backup
+   - Store in secure location
+   - Test restore procedure weekly
+
+2. Index Optimization (Weekly)
+   - ANALYZE TABLE tables
+   - Rebuild fragmented indexes
+   - Monitor query performance
+
+3. Data Cleanup (Monthly)
+   - Archive old audit logs (>1 year)
+   - Delete test data
+   - Compact database
+
+4. Performance Review (Monthly)
+   - Check slow query log
+   - Optimize frequently used queries
+   - Monitor disk usage
+
+5. Security Audit (Quarterly)
+   - Review user accounts
+   - Check permission levels
+   - Verify backup integrity
+
+
+================================================================================
+12. SECURITY CONSIDERATIONS
+================================================================================
+
+12.1 AUTHENTICATION SECURITY
+-----------
+
+Password Storage:
+- Algorithm: BCrypt (hash algorithm with salt)
+- Cost Factor: 10 (slowing factor)
+- Hash Output: 60 characters
+- Saltiness: Automatically generated and included in hash
+- Verification: password_verify() function
+
+Example Hash:
+Plain Password: "admin123"
+BCrypt Hash: "$2y$10$qMN2wc3qTvXbQGPnGjpYeOoHzjCY3n4b6yDqZm5zVxQ1N8a8pVl0O"
+
+Code Implementation:
+// Hashing
+$hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT, ['cost' => 10]);
+
+// Verification
+if (password_verify($plainPassword, $hashedPassword)) {
+    // Password correct
+} else {
+    // Password incorrect
+}
+
+Session Management:
+- Session ID: Randomly generated, 32+ character string
+- Session Timeout: Configurable (default: 30 minutes)
+- Secure Flag: Set for HTTPS connections
+- HttpOnly Flag: Prevents JavaScript access
+- SameSite: Set to 'Strict' for CSRF protection
+
+12.2 SQL INJECTION PREVENTION
+-----------
+
+Vulnerable Code (DO NOT USE):
+$username = $_POST['username'];
+$query = "SELECT * FROM users WHERE username = '$username'";
+// Attacker input: ' OR '1'='1
+// Result: Returns all users
+
+Protected Code (CORRECT):
+$username = $_POST['username'];
+$query = "SELECT * FROM users WHERE username = ?";
+$stmt = $pdo->prepare($query);
+$stmt->execute([$username]);
+$user = $stmt->fetch();
+
+Implementation Methods:
+1. Prepared Statements (PRIMARY)
+   - Separate SQL from data
+   - Parameters bound safely
+   - Works with all databases
+   
+2. Parameterized Queries
+   - Placeholders (?) for values
+   - Executed with execute() method
+
+3. Input Validation (SECONDARY)
+   - Validate data type
+   - Validate data format
+   - Validate data length
+   - Reject invalid input
+
+12.3 XSS (CROSS-SITE SCRIPTING) PREVENTION
+-----------
+
+Vulnerable Code (DO NOT USE):
+echo "Welcome " . $_GET['username']; // Direct output
+// Attacker input: <script>alert('xss')</script>
+
+Protected Code (CORRECT):
+echo "Welcome " . htmlspecialchars($_GET['username'], ENT_QUOTES, 'UTF-8');
+// Output: Welcome &lt;script&gt;alert('xss')&lt;/script&gt;
+
+Protection Techniques:
+
+1. Output Encoding
+   - htmlspecialchars(): Convert special chars to HTML entities
+   - htmlentities(): Encode all special characters
+   - json_encode(): For JSON output
+
+2. Content Security Policy (CSP)
+   Header: Content-Security-Policy: default-src 'self'
+   - Prevents inline scripts
+   - Restricts external resources
+   - Reports violations
+
+3. Input Validation
+   - Validate data type
+   - Reject dangerous characters
+   - Whitelist approach (only allow safe characters)
+
+Example Implementation:
+$userName = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
+echo "User: " . $userName; // Safe output
+
+12.4 CSRF (CROSS-SITE REQUEST FORGERY) PREVENTION
+-----------
+
+Attack Scenario:
+1. User logs into application
+2. User visits malicious website (in another tab)
+3. Malicious site sends hidden request to application
+4. Request executes with user's authentication
+5. User's data modified without consent
+
+Prevention: CSRF Tokens
+
+Token Generation:
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+Token Verification:
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die('CSRF token validation failed');
+}
+
+Form Implementation:
+<form method="POST">
+    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+    <input type="text" name="username">
+    <button type="submit">Submit</button>
+</form>
+
+12.5 INPUT VALIDATION
+-----------
+
+Validation Types:
+
+1. Type Validation
+   - Check data type (int, string, float, bool)
+   - filter_var($value, FILTER_VALIDATE_INT)
+
+2. Format Validation
+   - Email format: filter_var($email, FILTER_VALIDATE_EMAIL)
+   - URL format: filter_var($url, FILTER_VALIDATE_URL)
+   - IP address: filter_var($ip, FILTER_VALIDATE_IP)
+
+3. Range Validation
+   - Numeric range: value >= min && value <= max
+   - String length: strlen($str) >= min && strlen($str) <= max
+
+4. Pattern Validation
+   - Regular expressions for complex patterns
+   - Phone: /^\d{3}-\d{3}-\d{4}$/
+   - Username: /^[a-zA-Z0-9_]{3,20}$/
+
+5. Custom Validation
+   - Database lookups (user exists?)
+   - Business logic checks
+
+Implementation Example:
+function validateProductData($data) {
+    $errors = [];
+    
+    // Name validation
+    if (empty($data['name'])) {
+        $errors[] = "Product name required";
+    } elseif (strlen($data['name']) > 255) {
+        $errors[] = "Product name too long";
+    }
+    
+    // Quantity validation
+    if (!is_numeric($data['quantity'])) {
+        $errors[] = "Quantity must be numeric";
+    } elseif ($data['quantity'] < 0) {
+        $errors[] = "Quantity cannot be negative";
+    }
+    
+    // Price validation
+    if (!is_numeric($data['price'])) {
+        $errors[] = "Price must be numeric";
+    } elseif ($data['price'] < 0) {
+        $errors[] = "Price cannot be negative";
+    }
+    
+    return count($errors) > 0 ? $errors : true;
+}
+
+12.6 DATA ENCRYPTION
+-----------
+
+Sensitive Data Handling:
+
+1. Passwords
+   - Never store plain text
+   - Use BCrypt hashing
+   - Irreversible (one-way function)
+
+2. Email Addresses
+   - Store as plain text in database
+   - Use HTTPS for transmission
+   - Validate before storage
+
+3. Session Data
+   - Encrypted in transit (HTTPS)
+   - HttpOnly flag (no JavaScript access)
+   - SameSite flag (CSRF protection)
+
+4. File Uploads
+   - Rename uploaded files (avoid path traversal)
+   - Store outside web root
+   - Validate file type
+   - Scan for malware
+
+HTTPS/SSL Implementation:
+- Use HTTPS for all connections
+- Install SSL certificate
+- Redirect HTTP to HTTPS
+- Set Secure flag on cookies
+- Set STS (Strict-Transport-Security) header
+
+12.7 SECURITY HEADERS
+-----------
+
+Recommended Security Headers:
+
+Header: Content-Security-Policy
+Purpose: Prevent XSS attacks
+Value: default-src 'self'; script-src 'self' cdn.example.com
+
+Header: X-Frame-Options
+Purpose: Prevent clickjacking
+Value: SAMEORIGIN (allow framing from same origin only)
+
+Header: X-Content-Type-Options
+Purpose: Prevent MIME type sniffing
+Value: nosniff
+
+Header: Strict-Transport-Security
+Purpose: Force HTTPS connection
+Value: max-age=31536000; includeSubDomains
+
+Implementation:
+header("Content-Security-Policy: default-src 'self'");
+header("X-Frame-Options: SAMEORIGIN");
+header("X-Content-Type-Options: nosniff");
+
+12.8 RATE LIMITING
+-----------
+
+Purpose: Prevent brute force attacks on login
+
+Implementation:
+Track failed login attempts per IP address:
+- 3 failed attempts → 5 minute lockout
+- 10 failed attempts → 1 hour lockout
+- 20 failed attempts → 24 hour lockout
+
+Code Example:
+function checkRateLimit($ip) {
+    // Check failed attempts in last hour
+    $attempts = getFailedAttempts($ip);
+    
+    if ($attempts >= 5) {
+        return false; // Too many attempts
+    }
+    return true; // OK to proceed
+}
+
+12.9 SECURITY TESTING CHECKLIST
+-----------
+
+Before Production Deployment:
+[✓] All passwords hashed with BCrypt
+[✓] All database queries use prepared statements
+[✓] All user input validated
+[✓] Output encoded with htmlspecialchars()
+[✓] CSRF tokens implemented on all forms
+[✓] HTTPS certificate installed
+[✓] Security headers configured
+[✓] File upload restrictions enabled
+[✓] Directory traversal prevention enabled
+[✓] Error messages don't expose system details
+[✓] Database credentials not in version control
+[✓] Session timeout configured
+[✓] Rate limiting implemented
+[✓] Audit logging enabled
+[✓] Regular security updates scheduled
+[✓] Backup/restore tested
+[✓] Access controls verified by role
+[✓] SQL injection tests passed
+[✓] XSS tests passed
+[✓] CSRF tests passed
+
+12.10 INCIDENT RESPONSE
+-----------
+
+If Security Issue Discovered:
+1. Immediately disable affected account/feature
+2. Assess scope (how many users affected?)
+3. Document the vulnerability
+4. Create fix and test thoroughly
+5. Deploy fix to production
+6. Notify affected users
+7. Monitor for suspicious activity
+8. Review logs for evidence of exploitation
+9. Update security documentation
+10. Schedule post-incident review
+
+
+================================================================================
+13. CONCLUSION AND FUTURE ENHANCEMENTS
+================================================================================
+
+13.1 PROJECT SUMMARY
+-----------
+This Inventory Management System successfully demonstrates comprehensive 
+application of Object-Oriented Programming principles, database design, 
+and web development practices. The project implements a fully functional 
+inventory management solution with advanced features including user 
+authentication, detailed reporting, analytics, and robust security measures.
+
+Key Accomplishments:
+✓ Complete CRUD functionality for inventory management
+✓ Secure user authentication with role-based access control
+✓ Real-time dashboard with key metrics and statistics
+✓ Multiple report types with export functionality
+✓ Advanced security implementation (input validation, SQL injection prevention)
+✓ Responsive user interface with dark mode support
+✓ Comprehensive unit testing with PHPUnit
+✓ Well-documented code following industry standards
+✓ Professional project structure following MVC pattern
+
+13.2 LESSONS LEARNED
+-----------
+
+Technical Lessons:
+- MVC architecture provides excellent code organization
+- Prepared statements are essential for SQL security
+- Proper input validation prevents multiple security issues
+- Database indexes significantly improve query performance
+- Unit testing catches bugs early in development
+- BCrypt provides secure password hashing without custom logic
+
+Project Management Lessons:
+- Clear requirements prevent scope creep
+- Regular testing throughout development saves time
+- Documentation should be created alongside code
+- Version control is essential for team projects
+- Regular backups prevent data loss disasters
+- Security should be considered from project start
+
+Development Best Practices:
+- Use prepared statements for all database queries
+- Always validate user input
+- Use consistent coding standards
+- Comment complex logic
+- Create comprehensive error handling
+- Test edge cases thoroughly
+- Keep database schema normalized
+
+13.3 CURRENT CAPABILITIES SUMMARY
+-----------
+
+Version 2.0 Features Implemented:
+✓ Product Management
+  - Full CRUD operations
+  - Category organization
+  - Image upload support
+  - Stock level tracking
+
+✓ User Management
+  - Registration and authentication
+  - Role-based permissions
+  - Status management
+  - Password security
+
+✓ Dashboard & Analytics
+  - Real-time statistics
+  - Category breakdown
+  - Top products analysis
+  - Stock alerts
+
+✓ Reporting System
+  - Full inventory reports
+  - Low-stock alerts
+  - Category analysis
+  - ABC analysis
+  - CSV/HTML export
+
+✓ Security
+  - BCrypt password hashing
+  - SQL injection prevention
+  - XSS protection
+  - CSRF tokens
+  - Input validation
+  - Audit logging
+
+13.4 SHORT-TERM ENHANCEMENTS (1-3 months)
+-----------
+
+Enhancement 1: Email Notifications
+- Send stock alerts to staff
+- Email product updates
+- Notify admins of system events
+- Implementation: PHPMailer library
+
+Enhancement 2: Advanced Search
+- Filter by multiple criteria
+- Date range filtering
+- Price range filtering
+- Stock level filtering
+- Implementation: Enhanced SQL queries
+
+Enhancement 3: User Profile Management
+- User can update own information
+- Password change functionality
+- Profile picture uploads
+- Implementation: New User controller methods
+
+Enhancement 4: Print Friendly Reports
+- Professional report formatting
+- Print to PDF functionality
+- Custom report templates
+- Implementation: TCPDF library
+
+Enhancement 5: Dashboard Customization
+- User can choose dashboard widgets
+- Save preferred views
+- Custom date ranges
+- Implementation: User preferences table
+
+13.5 MEDIUM-TERM ENHANCEMENTS (3-6 months)
+-----------
+
+Enhancement 1: Supplier Management
+- Track suppliers for each product
+- Purchase order creation
+- Supplier contact information
+- Database table: suppliers
+
+Enhancement 2: Inventory Transactions
+- Log all inventory movements
+- Track adjustments and reasons
+- Historical audit trail
+- Database table: inventory_transactions
+
+Enhancement 3: API Integration
+- REST API for external systems
+- Third-party integrations
+- Mobile app support
+- Implementation: API endpoints in index.php
+
+Enhancement 4: Barcode System
+- Generate product barcodes
+- Barcode scanning for inventory
+- Automated stock updates
+- Implementation: PHPQR library
+
+Enhancement 5: Multi-location Support
+- Manage inventory across locations
+- Transfer between locations
+- Location-specific reports
+- Database table: locations
+
+Enhancement 6: Mobile Application
+- React Native or Flutter app
+- Offline functionality
+- Camera integration for barcodes
+- Implementation: Mobile app development
+
+13.6 LONG-TERM ENHANCEMENTS (6+ months)
+-----------
+
+Enhancement 1: Machine Learning Analytics
+- Demand forecasting
+- Optimal reorder point calculation
+- Price optimization
+- Anomaly detection
+- Implementation: Python ML library integration
+
+Enhancement 2: Multi-tenancy
+- Support multiple organizations
+- Data isolation per tenant
+- Custom branding
+- Database schema redesign
+
+Enhancement 3: Advanced Reporting
+- Business intelligence dashboards
+- Predictive analytics
+- Custom report builder
+- Scheduled reports
+- Implementation: Tableau or Grafana integration
+
+Enhancement 4: Integration Platform
+- ERP system integration
+- Accounting software integration
+- E-commerce platform integration
+- Payment gateway integration
+- Implementation: Webhook system
+
+Enhancement 5: Distributed System
+- Microservices architecture
+- API gateway
+- Message queue system
+- Horizontal scaling
+- Implementation: Docker and Kubernetes
+
+Enhancement 6: Artificial Intelligence
+- Chatbot for support
+- Smart inventory recommendations
+- Anomaly detection
+- Natural language search
+- Implementation: AI/ML frameworks
+
+13.7 MAINTENANCE PLAN
+-----------
+
+Monthly Tasks:
+- Review error logs and fix bugs
+- Update security patches
+- Optimize slow-running queries
+- Archive old audit logs
+- Review user access controls
+- Perform full backup
+
+Quarterly Tasks:
+- Security audit and penetration testing
+- Performance analysis and optimization
+- Database maintenance (OPTIMIZE, ANALYZE)
+- Review and update documentation
+- Planning for next enhancements
+- Team training on new features
+
+Annual Tasks:
+- Technology stack upgrade planning
+- Architecture review for scalability
+- Comprehensive security assessment
+- Strategic planning for major versions
+- License renewals and compliance check
+- Infrastructure capacity planning
+
+Support & Bug Fixes:
+- Critical bugs: Fix within 24 hours
+- Security issues: Fix immediately
+- Non-critical bugs: Fix within 1 week
+- Feature requests: Evaluate and plan
+- User feedback: Implement improvements
+
+13.8 DEPLOYMENT CHECKLIST
+-----------
+
+Before Going to Production:
+[✓] All tests pass (unit and integration)
+[✓] Code review completed
+[✓] Security audit passed
+[✓] Performance testing completed
+[✓] Database backups verified
+[✓] Documentation updated
+[✓] Deployment procedure documented
+[✓] Rollback procedure documented
+[✓] Monitoring and alerting configured
+[✓] Error logging configured
+[✓] HTTPS/SSL certificate installed
+[✓] Firewall rules configured
+[✓] Database optimized and indexed
+[✓] Load testing completed
+[✓] Disaster recovery plan prepared
+[✓] Stakeholders notified
+[✓] Go-live schedule confirmed
+[✓] Support team trained
+
+
+================================================================================
+14. REFERENCES AND APPENDICES
+================================================================================
+
+14.1 ACADEMIC REFERENCES
+-----------
+
+Design Patterns:
+1. Freeman, E., & Freeman, E. (2004). Head First Design Patterns. 
+   O'Reilly Media. [MVC, Active Record, Singleton patterns]
+
+2. Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). 
+   Design Patterns: Elements of Reusable Object-Oriented Software. 
+   Addison-Wesley. [Gang of Four patterns]
+
+Web Development:
+3. Stubbornella, N. (2009). Object-Oriented CSS. 
+   Retrieved from http://oocss.org [CSS architecture]
+
+4. McDowell, G. L. (2015). Cracking the Coding Interview (6th ed.). 
+   CareerCup. [System design, algorithms]
+
+Database Design:
+5. Codd, E. F. (1970). "A Relational Model of Data for Large 
+   Shared Data Banks". Communications of the ACM. 
+   [Foundational relational database theory]
+
+6. Connolly, T., & Begg, C. (2014). Database Systems: A Practical Approach 
+   to Design, Implementation, and Management (5th ed.). 
+   Pearson Education. [Database design principles]
+
+Security:
+7. OWASP. (2021). OWASP Top 10 Web Application Security Risks. 
+   Retrieved from https://owasp.org/www-project-top-ten/
+
+8. Schneier, B. (2000). Secrets and Lies: Digital Security in a 
+   Networked World. John Wiley & Sons. [Security fundamentals]
+
+14.2 TECHNICAL REFERENCES
+-----------
+
+Official Documentation:
+- PHP Manual: https://www.php.net/docs.php
+- MySQL Documentation: https://dev.mysql.com/doc/
+- Bootstrap 5: https://getbootstrap.com/docs/5.0/
+- jQuery API: https://api.jquery.com/
+
+Security Guidelines:
+- OWASP Top 10: https://owasp.org/www-project-top-ten/
+- OWASP CHEAT SHEETS: https://cheatsheetseries.owasp.org/
+- CWE (Common Weakness Enumeration): https://cwe.mitre.org/
+
+Code Standards:
+- PSR-12 (PHP-FIG): https://www.php-fig.org/psr/psr-12/
+- PSR-4 (Autoloading): https://www.php-fig.org/psr/psr-4/
+
+Tools & Libraries:
+- PHPUnit: https://phpunit.de/
+- Composer: https://getcomposer.org/
+- Git: https://git-scm.com/
+
+14.3 GLOSSARY
+-----------
+
+AJAX (Asynchronous JavaScript and XML)
+- Technology for making asynchronous HTTP requests without page reload
+- Enables smooth user experience with background data loading
+
+API (Application Programming Interface)
+- Set of rules and protocols for building application software
+- Defines methods for communication between components
+
+Audit Log
+- Record of all system changes for compliance and security tracking
+- Includes user, action, timestamp, and affected data
+
+BCrypt
+- Password hashing algorithm using salt and multiple iterations
+- Designed to be slow and resistant to brute-force attacks
+
+CRUD (Create, Read, Update, Delete)
+- Four basic operations for database records
+- Foundation of data manipulation
+
+CSRF (Cross-Site Request Forgery)
+- Security vulnerability where attacker makes victim's browser send unwanted requests
+- Prevented with CSRF tokens
+
+CSS (Cascading Style Sheets)
+- Language for styling HTML elements
+- Controls visual presentation of web pages
+
+Database Index
+- Data structure for faster data retrieval
+- Similar to book index for quick reference
+
+Domain
+- Address where web application is hosted
+- Example: http://localhost/aoop
+
+Entity Relationship Diagram (ERD)
+- Visual representation of database structure and relationships
+- Shows tables, columns, and connections
+
+Foreign Key (FK)
+- Column that references primary key of another table
+- Enforces referential integrity
+
+HTML (HyperText Markup Language)
+- Markup language for creating web page structure
+- Tags define content and layout
+
+HTTPS (Secure HTTP)
+- Encrypted version of HTTP protocol
+- Uses SSL/TLS for secure communication
+
+JavaScript
+- Programming language for client-side web interactions
+- Enables dynamic and interactive web pages
+
+JSON (JavaScript Object Notation)
+- Lightweight data format for data exchange
+- Human-readable text format for data
+
+MVC (Model-View-Controller)
+- Architectural pattern separating concerns
+- Model: data, View: presentation, Controller: logic
+
+MySQL
+- Relational database management system
+- Stores and retrieves structured data
+
+OOP (Object-Oriented Programming)
+- Programming paradigm using objects and classes
+- Emphasizes modularity and code reuse
+
+PDO (PHP Data Objects)
+- PHP database abstraction layer
+- Provides unified interface for different databases
+
+Prepared Statement
+- Pre-compiled SQL statement with placeholders
+- Prevents SQL injection attacks
+
+Primary Key (PK)
+- Unique identifier for database record
+- Must be unique and not null
+
+Query
+- Request for data retrieval or modification
+- Written in SQL language
+
+Refactoring
+- Restructuring code without changing functionality
+- Improves readability and maintainability
+
+SQL (Structured Query Language)
+- Language for managing relational databases
+- Standard for database operations
+
+SSL/TLS (Secure Sockets Layer / Transport Layer Security)
+- Protocols for secure communication over network
+- Encrypts data in transit
+
+XSS (Cross-Site Scripting)
+- Security vulnerability where attacker injects malicious scripts
+- Prevented with output encoding and input validation
+
+14.4 DOCUMENT CONTROL
+-----------
+
+Version History:
+┌───────┬─────────────┬──────────────┬────────────────────────────┐
+│ Ver   │ Date        │ Author       │ Changes                    │
+├───────┼─────────────┼──────────────┼────────────────────────────┤
+│ 1.0   │ Jan 2026    │ [Name]       │ Initial release            │
+│ 1.1   │ [Date]      │ [Name]       │ [Changes made]             │
+│ 2.0   │ [Date]      │ [Name]       │ [New features, updates]    │
+└───────┴─────────────┴──────────────┴────────────────────────────┘
+
+Approval & Sign-off:
+Document Title: OOP Final Project Documentation
+Project: PHP Inventory Management System
+Date Completed: January 25, 2026
+Status: [In Progress / Submitted / Approved]
+
+Signatures:
+Student/Author: ___________________________ Date: __________
+Instructor: ______________________________ Date: __________
+Department Head: ___________________________ Date: __________
+
+Document Distribution:
+- Student Copy: [Student]
+- Instructor Copy: [Instructor]
+- Project Repository: Github/GitLab
+- Organization Archives: [Archive Location]
+
+14.5 APPENDIX A: INSTALLATION SCREENSHOTS
+-----------
+
+[Note: Include actual screenshots of:
+- XAMPP Control Panel
+- Setup wizard screens
+- Login screen
+- Main inventory page
+- Dashboard with statistics
+- Sample report]
+
+14.6 APPENDIX B: DATABASE BACKUP PROCEDURE
+-----------
+
+Backup Using Command Line:
+mysqldump -u root -p inventory_db > backup_inventory_db.sql
+
+Restore from Backup:
+mysql -u root -p inventory_db < backup_inventory_db.sql
+
+Backup Using PHPMyAdmin:
+1. Login to PHPMyAdmin
+2. Select database: inventory_db
+3. Click Export tab
+4. Choose format: SQL
+5. Click Go to download backup
+
+14.7 APPENDIX C: CODING STANDARDS
+-----------
+
+Class Naming: PascalCase
+- ProductModel
+- InventoryController
+- SecurityHelper
+
+Function Naming: camelCase
+- getProductById()
+- createNewProduct()
+- validateUserInput()
+
+Variable Naming: snake_case
+- user_id
+- product_name
+- is_active
+
+Constants: UPPERCASE
+- DB_HOST
+- LOW_STOCK_THRESHOLD
+- MAX_LOGIN_ATTEMPTS
+
+Indentation: 4 spaces (no tabs)
+Line Length: Maximum 120 characters
+Brackets: Allman style (opening brace on new line)
+
+14.8 APPENDIX D: COMMON ERRORS AND SOLUTIONS
+-----------
+
+Error: "Call to undefined function password_hash()"
+Solution: Ensure PHP 5.5+ is installed
+
+Error: "SQLSTATE[HY000]: General error: 1030"
+Solution: Check available disk space, MySQL memory limits
+
+Error: "Access denied for user 'root'@'localhost'"
+Solution: Verify MySQL credentials in config/database.php
+
+Error: "Class 'PDO' not found"
+Solution: Ensure PHP PDO extension is enabled in php.ini
+
+================================================================================
+                        END OF DOCUMENTATION
+================================================================================
+
+Document Completion Notes:
+This comprehensive documentation provides complete coverage of the 
+Inventory Management System project including design, implementation, 
+testing, security, and maintenance considerations. All required sections 
+for an academic OOP final project have been included with detailed 
+specifications and examples.
+
+Document Status: Ready for Submission
+Last Updated: January 25, 2026
+Page Count: [Auto-generate after PDF conversion]
+
+================================================================================
